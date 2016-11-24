@@ -30,7 +30,13 @@ void draw(){
     }
     theText.display();       
 }
+
 boolean displayCB = true;
+
 void mousePressed() {
   displayCB = !displayCB;
+}
+
+void keyPressed(){
+  mousePressed();
 }
