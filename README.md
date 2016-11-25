@@ -1,5 +1,9 @@
 # CharacterPixels
 Processing code to demo the use of text characters as pixels
+# Check out the Video!
+[Character Pixels: The Film](https://youtu.be/0j_LSISRa5w)
+
+
 # Usage
 - **Mouse click** will toggle the display of the underlying image,
 - **'+' key** will start incrementing the number of squares on the checkerboard
