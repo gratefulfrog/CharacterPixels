@@ -2,6 +2,7 @@
 Processing code to demo the use of text characters as pixels
 # Check out the Video!
 [Character Pixels: The COOL Film](https://youtu.be/D1C81xTckc4) (with 12px Characters)
+
 [Character Pixels: The BIG Film](https://youtu.be/enDxRxBbZ-4) (with 48px Characters)
 
 
