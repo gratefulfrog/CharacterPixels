@@ -57,7 +57,13 @@ class DisplayText{
           fillC = stdBoxAvg(x,y,cw,isDescender(c) ? ch : cu);
         }
         fill(fillC);
-        text(c,x,y);
+         if (c ==' ' && rectFillForSpace){
+          noStroke();
+          rect(x,y,cw,ch);
+        }
+        else{ // draw a little rect
+          text(c,x,y);
+        }
         x += cw;
       }
       else{ // new line

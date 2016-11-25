@@ -25,6 +25,7 @@ void setup(){
   BoundingBoxMap bm =  new BoundingBoxMap();
   theText = new DisplayText(bm,pg);
   println("Using " + (trueBox ? "True" : "Std") + " Box!");
+  println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
   updatePG();
 }
 
@@ -56,7 +57,8 @@ void updatePG(){
 
 boolean rot = false,
         displayPG = false,
-        trueBox   = true;
+        trueBox   = true,
+        rectFillForSpace = false;
 
 void mousePressed() {
   displayPG = !displayPG;
@@ -66,6 +68,10 @@ void keyPressed(){
   if (key =='t' || key == 'T'){
     trueBox = !trueBox;
     println("Using " + (trueBox ? "True" : "Std") + " Box!");
+  }
+  else  if (key =='r' || key == 'R'){
+    rectFillForSpace = !rectFillForSpace;
+    println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
   }
   else{
     rot = !rot;
