@@ -23,7 +23,7 @@ void setup(){
   textFont(font, 12);
   img = loadImage("iguana1280x720.jpg");
   BoundingBoxMap bm =  new BoundingBoxMap();
-  theText = new DisplayText(bm);
+  theText = new DisplayText(bm,pg);
   println("Using " + (trueBox ? "True" : "Std") + " Box!");
   updatePG();
 }
@@ -49,7 +49,6 @@ void updatePG(){
   pg.translate(width/2.0,height/2.0);
   pg.rotate(radians(5*count++));
   pg.image(img,0,0);
-  pg.loadPixels();
   pg.popMatrix();
   pg.endDraw();
 }

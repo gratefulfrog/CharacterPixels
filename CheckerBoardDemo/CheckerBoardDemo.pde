@@ -7,9 +7,11 @@ color bg = #AFA1A1,// beige,
       black = #000000;
 
 PImage img;
+PGraphics pg;
 Checkerboard cb;
 int checkDim = 1,  // width of checkerboard squares
     inc = 1;
+
 DisplayText theText;
 
 BoundingBoxMap bm;  
@@ -18,34 +20,43 @@ void setup(){
   size(1280,720);
   frameRate(10);
   background(white);
-  //PFont font = loadFont("TeXGyreHeros-Regular-48.vlw");
+  imageMode(CENTER);
+  pg = createGraphics(1280,720);
   PFont font = loadFont("FreeSans-12.vlw");
   textFont(font, 12);
-  img = createImage(1280, 720, RGB);
+  img = createImage(1280, 720, RGB); //loadImage("iguana1280x720.jpg");
   cb = new Checkerboard(img, checkDim);
   BoundingBoxMap bm =  new BoundingBoxMap();
-  theText = new DisplayText(bm);
+  theText = new DisplayText(bm,pg);
   println("Using " + (trueBox ? "True" : "Std") + " Box!");
+  updatePG();
 }
 
-
 void draw(){
-  if (frameCount%20==0 && inc!=0){
+  background(black);
+  updatePG();
+  if (displayPG){
+    image(pg,width/2.0,height/2.0);
+  }
+  theText.display();   
+}
+
+void updatePG(){
+  if (inc!=0 && frameCount%20==0){
     checkDim =max(1,checkDim+inc);
     cb = new Checkerboard(img, checkDim);
   }
-  background(bg);
-  if (displayCB){
-    cb.display();
-  }
-  theText.display();       
+  pg.beginDraw();
+  pg.background(black);
+  pg.image(img,0,0);
+  pg.endDraw();
 }
 
-boolean displayCB = false,
+boolean displayPG = false,
         trueBox   = true;
 
 void mousePressed() {
-  displayCB = !displayCB;
+  displayPG = !displayPG;
 }
 
 void keyPressed(){
@@ -55,7 +66,7 @@ void keyPressed(){
   else if (key == '-'){
     inc = -1;
   }
-  else if (key =='t' || key == 'T'){
+  else  if (key =='t' || key == 'T'){
     trueBox = !trueBox;
     println("Using " + (trueBox ? "True" : "Std") + " Box!");
   }

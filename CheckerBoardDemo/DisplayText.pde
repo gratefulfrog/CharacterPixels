@@ -13,8 +13,10 @@ class DisplayText{
   final String word = new String("AbCdefg ");
   String theText = new String("");
   BoundingBoxMap bm;
+  PGraphics pgr;
   
-  DisplayText(BoundingBoxMap bbm){
+  DisplayText(BoundingBoxMap bbm,PGraphics ppg){
+    pgr = ppg;
     final int wordWidth    = round(textWidth(word)),
               textHeight   =  round(textAscent()+textDescent());
     int horizPixels  = 0,
@@ -86,7 +88,7 @@ class DisplayText{
         b = 0;
     for (int hi = top;hi<bottom;hi++){
       for (int wi = left;wi<right;wi++){
-        color col = img.get(x+wi,y+hi);
+        color col = pgr.get(x+wi,y+hi);
         r += red(col);
         g += green(col);
         b += blue(col);
@@ -106,7 +108,7 @@ class DisplayText{
         b = 0;
     for (int hi = 0;hi<h;hi++){
       for (int wi = 0;wi<w;wi++){
-        color c = img.get(x+wi,y+hi);
+        color c = pgr.get(x+wi,y+hi);
         r += red(c);
         g += green(c);
         b += blue(c);
