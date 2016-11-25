@@ -16,8 +16,9 @@ void setup(){
   size(1280,720);
   frameRate(10);
   background(white);
-  PFont font = loadFont("TeXGyreHeros-Regular-48.vlw");
-  textFont(font, 48);
+  //PFont font = loadFont("TeXGyreHeros-Regular-48.vlw");
+  PFont font = loadFont("FreeSans-12.vlw");
+  textFont(font, 12);
   img = createImage(1280, 720, RGB);
   cb = new Checkerboard(img, checkDim);
   theText = new DisplayText();
@@ -36,7 +37,7 @@ void draw(){
   theText.display();       
 }
 
-boolean displayCB = true;
+boolean displayCB = false;
 
 void mousePressed() {
   displayCB = !displayCB;
