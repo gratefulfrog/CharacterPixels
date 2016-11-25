@@ -25,7 +25,6 @@ void setup(){
   cb = new Checkerboard(img, checkDim);
   BoundingBoxMap bm =  new BoundingBoxMap();
   theText = new DisplayText(bm);
-  println("Using " + (trueBox ? "True" : "Std") + " Box!");
 }
 
 

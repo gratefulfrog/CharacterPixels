@@ -12,14 +12,12 @@ boolean isDescender(char c){
 class DisplayText{
   final String word = new String("AbCdefg ");
   String theText = new String("");
-  BoundingBoxMap bm;
   
-  DisplayText(BoundingBoxMap bbm){
+  DisplayText(){
     final int wordWidth    = round(textWidth(word)),
               textHeight   =  round(textAscent()+textDescent());
     int horizPixels  = 0,
         vertPixels   = textHeight;
-    bm = bbm;
     
     while (true){
      if ((horizPixels+ wordWidth) < width){
@@ -47,13 +45,7 @@ class DisplayText{
       char c = theText.charAt(i);
       if (c != '\n'){
         float cw = textWidth(c);
-        color fillC;
-        if (trueBox){
-          fillC =  trueBoxAvg(x,y,c);
-        }
-        else{
-          fillC = stdBoxAvg(x,y,cw,isDescender(c) ? ch : cu);
-        }
+        color fillC =  boxAvg(x,y,cw,isDescender(c) ? ch : cu);
         fill(fillC);
         text(c,x,y);
         x += cw;
@@ -64,38 +56,7 @@ class DisplayText{
       }
     }
   }
-  color trueBoxAvg(float xx, float yy, char cc){
-    final int x = round(xx),
-              y = round(yy);
-    Character c = cc;
-    BoundingBox bx = bm.get(c);
-    int left   = bx.left,
-        right  = bx.right,
-        top    = bx.top,
-        bottom = bx.bottom,
-        surface = (right-left)*(bottom-top);
-        if(surface==0){ // the character ' ' space, has no measurable bounding box, use the stnd one.
-          left  = 0;
-          top   = 0;
-          right = round(textWidth(c));
-          bottom = round(textAscent());
-          surface = (right-left)*(bottom-top);
-        }
-    int r = 0,
-        g = 0,
-        b = 0;
-    for (int hi = top;hi<bottom;hi++){
-      for (int wi = left;wi<right;wi++){
-        color col = img.get(x+wi,y+hi);
-        r += red(col);
-        g += green(col);
-        b += blue(col);
-      }
-    }
-    return color(round(r/surface),round(g/surface),round(b/surface));
-  }
-  
-  color stdBoxAvg(float xx, float yy, float ww, float hh){
+  color boxAvg(float xx, float yy, float ww, float hh){
     final int x = round(xx),
               y = round(yy),
               w = round(ww),

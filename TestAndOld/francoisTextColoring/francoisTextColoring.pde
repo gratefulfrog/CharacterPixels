@@ -12,8 +12,6 @@ int checkDim = 1,  // width of checkerboard squares
     inc = 1;
 DisplayText theText;
 
-BoundingBoxMap bm;  
-
 void setup(){
   size(1280,720);
   frameRate(10);
@@ -23,9 +21,7 @@ void setup(){
   textFont(font, 12);
   img = createImage(1280, 720, RGB);
   cb = new Checkerboard(img, checkDim);
-  BoundingBoxMap bm =  new BoundingBoxMap();
-  theText = new DisplayText(bm);
-  println("Using " + (trueBox ? "True" : "Std") + " Box!");
+  theText = new DisplayText();
 }
 
 
@@ -41,8 +37,7 @@ void draw(){
   theText.display();       
 }
 
-boolean displayCB = false,
-        trueBox   = true;
+boolean displayCB = false;
 
 void mousePressed() {
   displayCB = !displayCB;
@@ -54,10 +49,6 @@ void keyPressed(){
   }
   else if (key == '-'){
     inc = -1;
-  }
-  else if (key =='t' || key == 'T'){
-    trueBox = !trueBox;
-    println("Using " + (trueBox ? "True" : "Std") + " Box!");
   }
   else{
     inc =0;

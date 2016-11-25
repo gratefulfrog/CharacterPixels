@@ -74,9 +74,7 @@ class DisplayText{
         top    = bx.top,
         bottom = bx.bottom,
         surface = (right-left)*(bottom-top);
-        if(surface==0){ // the character ' ' space, has no measurable bounding box, use the stnd one.
-          left  = 0;
-          top   = 0;
+        if(surface==0){
           right = round(textWidth(c));
           bottom = round(textAscent());
           surface = (right-left)*(bottom-top);

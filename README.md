@@ -10,6 +10,7 @@ Processing code to demo the use of text characters as pixels
 - **Mouse click** will toggle the display of the underlying image,
 - **'+' key** will start incrementing the number of squares on the checkerboard
 - **'-' key** will start decrementing the number of squares on the checkerboard
+- **'t' or 'T' keys** will toggle use of true or standard character bounding box for character color computation, the type of box is displayed in the console.
 - **Any other key** will pause the inc/decrementing
 
 # Notes
