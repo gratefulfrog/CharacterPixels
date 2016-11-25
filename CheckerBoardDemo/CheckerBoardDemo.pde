@@ -62,21 +62,25 @@ void mousePressed() {
 }
 
 void keyPressed(){
-  if (key=='+'){
-    inc =1;
-  }
-  else if (key == '-'){
-    inc = -1;
-  }
-  else  if (key =='t' || key == 'T'){
-    trueBox = !trueBox;
-    println("Using " + (trueBox ? "True" : "Std") + " Box!");
-  }
-  else  if (key =='r' || key == 'R'){
-    rectFillForSpace = !rectFillForSpace;
-    println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
-  }
-  else{
-    inc =0;
+  switch(key){
+    case '+':
+      inc = 1;
+      break;
+    case '-':
+      inc = -1;
+      break;
+    case 't':
+    case 'T':
+      trueBox = !trueBox;
+      println("Using " + (trueBox ? "True" : "Std") + " Box!");
+      break;
+    case 'r':
+    case 'R':
+      rectFillForSpace = !rectFillForSpace;
+      println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
+      break;
+    default:
+      inc=0;
+      break;
   }
 }

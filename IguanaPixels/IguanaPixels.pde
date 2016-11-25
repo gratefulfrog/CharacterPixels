@@ -65,15 +65,19 @@ void mousePressed() {
 }
 
 void keyPressed(){
-  if (key =='t' || key == 'T'){
-    trueBox = !trueBox;
-    println("Using " + (trueBox ? "True" : "Std") + " Box!");
-  }
-  else  if (key =='r' || key == 'R'){
-    rectFillForSpace = !rectFillForSpace;
-    println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
-  }
-  else{
-    rot = !rot;
+  switch(key){
+    case 't':
+    case 'T':
+      trueBox = !trueBox;
+      println("Using " + (trueBox ? "True" : "Std") + " Box!");
+      break;
+    case 'r':
+    case 'R':
+      rectFillForSpace = !rectFillForSpace;
+      println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
+      break;
+    default:
+      rot = !rot;
+      break;
   }
 }
