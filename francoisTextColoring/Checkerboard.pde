@@ -17,17 +17,17 @@ class Checkerboard{
   
   color getCol(int y, int x){
     int cx =0,
-        cy =0,
-        w = round (width/pDim),
-        h = round(height/pDim);
-    for (int i= 0;i<10;i++){
-      if (x<w*i+1){
+        cy =0;
+     final float w =  (width/pDim),
+                 h =  (height/pDim);
+    for (int i= 0;i<pDim;i++){
+      if (x<w*(i+1)){
         cx = i%2;
         break;
       }
     }
-    for (int i= 0;i<10;i++){
-      if (y<h*i+1){
+    for (int i= 0;i<pDim;i++){
+      if (y<h*(i+1)){
         cy = i%2;
         break;
       }

@@ -8,12 +8,13 @@ color bg = #AFA1A1,// beige,
 
 PImage img;
 Checkerboard cb;
-int checkDim = 10;  // width of checkerboard squares
-
+int checkDim = 1,  // width of checkerboard squares
+    inc = 1;
 DisplayText theText;
 
 void setup(){
   size(1280,720);
+  frameRate(10);
   background(white);
   PFont font = loadFont("TeXGyreHeros-Regular-48.vlw");
   textFont(font, 48);
@@ -24,11 +25,15 @@ void setup(){
 
 
 void draw(){
-    background(bg);
-    if (displayCB){
-      cb.display();
-    }
-    theText.display();       
+  if (frameCount%20==0 && inc!=0){
+    checkDim =max(1,checkDim+inc);
+    cb = new Checkerboard(img, checkDim);
+  }
+  background(bg);
+  if (displayCB){
+    cb.display();
+  }
+  theText.display();       
 }
 
 boolean displayCB = true;
@@ -38,5 +43,13 @@ void mousePressed() {
 }
 
 void keyPressed(){
-  mousePressed();
+  if (key=='+'){
+    inc =1;
+  }
+  else if (key == '-'){
+    inc = -1;
+  }
+  else{
+    inc =0;
+  }
 }
