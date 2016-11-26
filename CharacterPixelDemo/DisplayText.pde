@@ -1,4 +1,6 @@
 
+boolean useLongText = true;
+
 boolean isDescender(char c){
   final char[] descenders = {'g','j','p','q','y'};
   for (int i = 0; i<descenders.length;i++){
@@ -22,20 +24,24 @@ class DisplayText{
     int horizPixels  = 0,
         vertPixels   = textHeight;
     bm = bbm;
-    
-    while (true){
-     if ((horizPixels+ wordWidth) < width){
-       theText += word;
-       horizPixels += wordWidth;
-     }
-     else if(vertPixels + textHeight < height){
-       theText += '\n';
-       horizPixels=0;
-       vertPixels += textHeight;
-     }
-     else{
-       break;
-     }
+    if (useLongText){
+      theText = theLongText;
+    }
+    else{
+      while (true){
+       if ((horizPixels+ wordWidth) < width){
+         theText += word;
+         horizPixels += wordWidth;
+       }
+       else if(vertPixels + textHeight < height){
+         theText += '\n';
+         horizPixels=0;
+         vertPixels += textHeight;
+       }
+       else{
+         break;
+       }
+      }
     }
   }
   
