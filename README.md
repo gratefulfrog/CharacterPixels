@@ -1,7 +1,10 @@
 # CharacterPixels
 Processing code to demo the use of text characters as pixels
 # Check out the Video!
-[Character Pixels: The COOL Film](https://youtu.be/D1C81xTckc4) (with 12px Characters)
+
+[Character Pixels: The Full Text Version!](https://youtu.be/rrVtNiJrFVA)  (Shows both demos with a genuine text in 12px characters)
+
+[Character Pixels: The COOL Film](https://youtu.be/D1C81xTckc4) (Checkerboard animation)
 
 [Character Pixels: The Friendly Rotating Iguana](https://youtu.be/krbMmw7lCLs) (shows how really cool this can be!)
 
