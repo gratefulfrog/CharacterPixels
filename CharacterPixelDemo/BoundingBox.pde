@@ -55,15 +55,11 @@ class BoundingBoxMap{
     return -1;
   }
   int Left(PGraphics g){
-    boolean found = false;
     int ret = width;
     for (int ih=0;ih<g.height;ih++){
       for (int iw=0; iw<g.width;iw++){
         color c = g.get(iw,ih);
-        if (!found && c != white){
-          found = true;
-        }
-        if (found && c != white){
+        if (c != white){
           ret = min(iw,ret);
         }
       }
@@ -72,15 +68,11 @@ class BoundingBoxMap{
   }
   
   int Bottom(PGraphics g){
-    boolean found = false;
     int ret = -1;
     for (int ih=0;ih<g.height;ih++){
       for (int iw=0; iw<g.width;iw++){
         color c = g.get(iw,ih);
-        if (!found && c != white){
-          found = true;
-        }
-        if (found && c != white){
+        if (c != white){
           ret = max(ih,ret);
         }
       }
@@ -88,15 +80,11 @@ class BoundingBoxMap{
     return ret;
   }
   int Right(PGraphics g){
-    boolean found = false;
     int ret = -1;
     for (int ih=0;ih<g.height;ih++){
       for (int iw=0; iw<g.width;iw++){
         color c = g.get(iw,ih);
-        if (!found && c != white){
-          found = true;
-        }
-        if (found && c != white){
+        if (c != white){
           ret = max(iw,ret);
         }
       }
