@@ -200,7 +200,7 @@ class IguanaDempApp extends CharPixelApp{
     pg.background(black);
     pg.imageMode(CENTER);
     pg.translate(width/2.0,height/2.0);
-    pg.rotate(radians(5*count++));
+    pg.rotate(radians(count++));
     pg.image(img,0,0);
     pg.popMatrix();
     pg.endDraw();

@@ -4,7 +4,7 @@ App app;
 
 void setup(){
   size(1280,720);
-  frameRate(10);
+  frameRate(25);
   pg = createGraphics(1280,720);
   app = new DemoChooserApp(pg);
 }
