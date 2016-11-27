@@ -20,13 +20,12 @@ class BoundingBoxMap{
   BoundingBox get(Character c){
     BoundingBox b = hm.get(c);
     if (b == null){
-      put(c);
-      b = hm.get(c);
+      b = put(c);
     }
     return b;
   }
  
-  void put(Character c){
+  BoundingBox put(Character c){
     PGraphics pg = createGraphics(100,100);
     pg.beginDraw();
     pg.textFont(font, fontSize);
@@ -35,13 +34,13 @@ class BoundingBoxMap{
     pg.fill(black);
     pg.text(c,0,0);
     pg.endDraw();
-    pg.loadPixels();
     BoundingBox b = new BoundingBox();
     b.top    = Top(pg);
     b.left   = Left(pg);
     b.bottom = Bottom(pg);
     b.right  = Right(pg);
     hm.put(c,b);
+    return b;
   }
   int Top(PGraphics g){
     for (int ih=0;ih<g.height;ih++){
