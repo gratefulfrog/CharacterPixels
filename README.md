@@ -16,3 +16,6 @@ Just run the processing program: CharacterPixelDemo
 
 Enjoy!
 
+# Notes
+- Memoisation is used to improve efficiency in character bounding box lookup! Check it out if you don't know what it is ;-)
+
