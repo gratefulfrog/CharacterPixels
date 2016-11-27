@@ -63,11 +63,11 @@ class DisplayText{
           fillC = stdBoxAvg(x,y,cw,isDescender(c) ? ch : cu);
         }
         fill(fillC);
-        if (c ==' ' && rectFillForSpace){
+        if (c ==' ' && rectFillForSpace){ // draw a little rect
           noStroke();
           rect(x,y,cw,ch);
         }
-        else{ // draw a little rect
+        else{ // draw the character
           text(c,x,y);
         }
         x += cw;

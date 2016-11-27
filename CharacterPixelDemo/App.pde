@@ -27,7 +27,6 @@ class App{
   void updatePG(){
   }
   void mousePressed(){
-    //displayPG = !displayPG;
   }  
   void keyPressed(){
   }

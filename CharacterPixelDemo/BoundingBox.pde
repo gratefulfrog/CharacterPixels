@@ -63,8 +63,8 @@ class BoundingBoxMap{
         if (!found && c != white){
           found = true;
         }
-        if (found && c != white && iw<ret){
-          ret = iw;
+        if (found && c != white){
+          ret = min(iw,ret);
         }
       }
     }
@@ -80,8 +80,8 @@ class BoundingBoxMap{
         if (!found && c != white){
           found = true;
         }
-        if (found && c != white && ih> ret){
-          ret = ih;
+        if (found && c != white){
+          ret = max(ih,ret);
         }
       }
     }
@@ -96,8 +96,8 @@ class BoundingBoxMap{
         if (!found && c != white){
           found = true;
         }
-        if (found && c != white && iw>ret){
-          ret = iw;
+        if (found && c != white){
+          ret = max(iw,ret);
         }
       }
     }
