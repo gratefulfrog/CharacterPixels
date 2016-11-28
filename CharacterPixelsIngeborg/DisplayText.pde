@@ -29,7 +29,7 @@ class DisplayText{
         vertPixels   = textHeight;
     bm = bbm;
     if (useLongText){
-      theText = theLongText;
+      theText = Screen1Text;
     }
     else{
       while (true){

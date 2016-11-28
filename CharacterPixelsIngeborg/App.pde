@@ -113,7 +113,7 @@ class CheckerboardDempApp extends CharPixelApp{
       inc = 1;
   CheckerboardDempApp(PGraphics p,PFont f, int fs){
     super(p,f,fs);
-    img = createImage(1280, 720, RGB);
+    img = createImage(1884,1080, RGB);
     cb = new Checkerboard(img, checkDim);
   }
   void updatePG(){
@@ -185,7 +185,7 @@ class IguanaDempApp extends CharPixelApp{
   
   IguanaDempApp(PGraphics p,PFont f, int fs){
     super(p,f,fs);
-    img = loadImage("iguana1280x720.jpg");
+    img = loadImage("iguana1884x1080.jpg");
   }
   boolean updatePgOK(){
     return rot;
