@@ -37,7 +37,7 @@ class App{
 }
 
 class DemoChooserApp extends App{
-  String left = new String("Checkerboard\nDemo"),
+  String left = new String("Lightning\nDemo"),
          right = new String("Friendly\nRotatating Iguana\nDemo"),
          bottom = new String("Any key to exit");
   
@@ -65,7 +65,7 @@ class DemoChooserApp extends App{
   } 
   void mousePressed(){
     if(mouseX <=width/2.0){
-      app= new CheckerboardDempApp(pg,font,fontSize);
+      app= new LightningDempApp(pg,font,fontSize);
     }
     else {
       app = new IguanaDempApp(pg,font,fontSize);
@@ -247,13 +247,15 @@ class IguanaDempApp extends CharPixelApp{
 }
 class LightningDempApp extends CharPixelApp{
   int count =0;
-  PImage[] imgVec;
+  PImage[] imgVec =  new PImage[25];
   int nbImages = 25;
   boolean animate = true;
+  
   LightningDempApp(PGraphics p,PFont f, int fs){
     super(p,f,fs);
     for (int i=0; i<nbImages;i++){
-      imgVec[i] = requestImage("iguana1884x1080.jpg");
+      imgVec[i] = requestImage("Lightning_" + nf(i,5) + ".png");
+    }
   }
   boolean updatePgOK(){
     return animate;
