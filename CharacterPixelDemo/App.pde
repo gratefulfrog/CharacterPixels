@@ -64,7 +64,6 @@ class DemoChooserApp extends App{
   } 
   void mousePressed(){
     if(mouseX <=width/2.0){
-      println("left demo");
       app= new CheckerboardDempApp(pg);
     }
     else {
