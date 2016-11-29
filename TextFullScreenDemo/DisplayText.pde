@@ -10,15 +10,14 @@ boolean isDescender(char c){
 
 class DisplayText{
   final String word = new String("AbCdefg ");
-  //String theText = new String("");
+  String theText = new String("");
   BoundingBoxMap bm;
   PGraphics pgr;
   PFont font;
   int fontSize;
-  String [] textLines;
-  Justifier just;
+  String [] lines;
   
-  DisplayText(BoundingBoxMap bbm,PGraphics ppg, PFont f, int fs, int lineWidth){
+  DisplayText(BoundingBoxMap bbm,PGraphics ppg, PFont f, int fs){
     pgr = ppg;
     font  = f;
     fontSize =  fs;
@@ -27,12 +26,7 @@ class DisplayText{
     int horizPixels  = 0,
         vertPixels   = textHeight;
     bm = bbm;
-    //theText = Screen1Text;
-    textLines = new String[Screen1Lines.length];
-    for (int i=0;i<Screen1Lines.length;i++){
-      textLines[i]=new String(Screen1Lines[i]);
-    }
-    just = new Justifier(textLines, font, fontSize, lineWidth);
+    theText = Screen1Text;
   }
   
   void display(boolean trueBox, boolean rectFillForSpace){  

@@ -10,12 +10,10 @@ class App{
   boolean displayPG = false;
   PFont font;
   int fontSize;
-  int lineWidth;
-  App(PGraphics p,PFont f, int fs, int lw){
+  App(PGraphics p,PFont f, int fs){
     pg = p;
     font = f;
     fontSize=fs;
-    lineWidth = lw;
     imageMode(CENTER);
   }
   void draw(){
@@ -39,12 +37,12 @@ class App{
 }
 
 class DemoChooserApp extends App{
-  String left = new String("Lightning\nDemo"),
+  String left = new String("Full Screen\nText\nDemo"),
          right = new String("Friendly\nRotatating Iguana\nDemo"),
          bottom = new String("Any key to exit");
   
-  DemoChooserApp(PGraphics p,PFont f, int fs,int lw){
-    super(p,f,fs,lw);
+  DemoChooserApp(PGraphics p,PFont f, int fs){
+    super(p,f,fs);
     displayPG = true;
   }
   void updatePG(){
@@ -67,10 +65,10 @@ class DemoChooserApp extends App{
   } 
   void mousePressed(){
     if(mouseX <=width/2.0){
-      app= new LightningDempApp(pg,font,fontSize,lineWidth);
+      app= new CheckerboardDempApp(pg,font,fontSize);
     }
     else {
-      app = new IguanaDempApp(pg,font,fontSize,lineWidth);
+      app = new IguanaDempApp(pg,font,fontSize);
     }
   }
   void keyPressed(){
@@ -85,10 +83,10 @@ class CharPixelApp extends App{
                  rectFillForSpace = false,
                  instructionsRead = false;
   PImage img;
-  CharPixelApp(PGraphics p,PFont f, int fs, int lw){
-    super(p,f,fs,lw);
+  CharPixelApp(PGraphics p,PFont f, int fs){
+    super(p,f,fs);
     bbm =  new BoundingBoxMap(font,fontSize);
-    dt = new DisplayText(bbm,pg,font,fontSize, lineWidth);
+    dt = new DisplayText(bbm,pg,font,fontSize);
     
     println("Using " + (trueBox ? "True" : "Std") + " Box!");
     println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
@@ -113,8 +111,8 @@ class CheckerboardDempApp extends CharPixelApp{
   Checkerboard cb;
   int checkDim = 1,  // width of checkerboard squares
       inc = 1;
-  CheckerboardDempApp(PGraphics p,PFont f, int fs,int lw){
-    super(p,f,fs,lw);
+  CheckerboardDempApp(PGraphics p,PFont f, int fs){
+    super(p,f,fs);
     img = createImage(1884,1080, RGB);
     cb = new Checkerboard(img, checkDim);
   }
@@ -163,7 +161,7 @@ class CheckerboardDempApp extends CharPixelApp{
         break;
       case 'q':
       case 'Q':
-        app = new DemoChooserApp(pg,font,fontSize,lineWidth);
+        app = new DemoChooserApp(pg,font,fontSize);
         break;
       case 'r':
       case 'R':
@@ -185,8 +183,8 @@ class IguanaDempApp extends CharPixelApp{
   int count =0;
   boolean rot = true;
   
-  IguanaDempApp(PGraphics p,PFont f, int fs,int lw){
-    super(p,f,fs,lw);
+  IguanaDempApp(PGraphics p,PFont f, int fs){
+    super(p,f,fs);
     img = loadImage("iguana1884x1080.jpg");
   }
   boolean updatePgOK(){
@@ -229,7 +227,7 @@ class IguanaDempApp extends CharPixelApp{
     switch(key){
       case 'q':
       case 'Q':
-        app = new DemoChooserApp(pg,font,fontSize,lineWidth);
+        app = new DemoChooserApp(pg,font,fontSize);
         break;
       case 'r':
       case 'R':
@@ -247,17 +245,16 @@ class IguanaDempApp extends CharPixelApp{
     }
   }
 }
-
+/*
 class LightningDempApp extends CharPixelApp{
   int count =0;
-  PImage[] imgVec =  new PImage[25];
+  PImage[] imgVec;
   int nbImages = 25;
   boolean animate = true;
-  
-  LightningDempApp(PGraphics p,PFont f, int fs,int lw){
-    super(p,f,fs,lw);
+  LightningDempApp(PGraphics p,PFont f, int fs){
+    super(p,f,fs);
     for (int i=0; i<nbImages;i++){
-      imgVec[i] = requestImage("Lightning_" + nf(i,5) + ".png");
+      imgVec[i] = requestImage("iguana1884x1080.jpg");
     }
   }
   boolean updatePgOK(){
@@ -300,7 +297,7 @@ class LightningDempApp extends CharPixelApp{
     switch(key){
       case 'q':
       case 'Q':
-        app = new DemoChooserApp(pg,font,fontSize,lineWidth);
+        app = new DemoChooserApp(pg,font,fontSize);
         break;
       case 'r':
       case 'R':
@@ -318,3 +315,4 @@ class LightningDempApp extends CharPixelApp{
     }
   }
 }
+*/
