@@ -65,7 +65,8 @@ class App{
 }
 
 class DemoChooserApp extends App{
-  String left = new String("Lightning\nDemo"),
+  String left = new String("Smoke\nDemo"),
+         middle =  new String("Lightning\nDemo"),
          right = new String("Friendly\nRotatating Iguana\nDemo"),
          bottom = new String("Any other key to exit"),
          top = new String("T to display full Text");
@@ -84,10 +85,12 @@ class DemoChooserApp extends App{
     pg.popMatrix();
     pg.pushMatrix();
     pg.translate(0,height/2.0);
-    pg.translate(width/3.0,0);
+    pg.translate(width/4.0,0);
     pg.textAlign(CENTER,CENTER);
     pg.text(left,0,0);
-    pg.translate(width/3.0,0);
+    pg.translate(width/4.0,0);
+    pg.text(middle,0,0);
+    pg.translate(width/4.0,0);
     pg.text(right,0,0);
     pg.popMatrix();
     pg.pushMatrix();
@@ -97,11 +100,14 @@ class DemoChooserApp extends App{
     pg.endDraw();
   } 
   void mousePressed(){
-    if(mouseX <=width/2.0){
-      app= new LightningDempApp(pg,font,fontSize,lineWidth,sHeight,textFileName,"LightningDemoFrame");
+    if(mouseX <=width*3/8.0){
+      app= new SmokeDemoApp(pg,font,fontSize,lineWidth,sHeight,textFileName,"SmokeDemoFrame");
+    }
+    else if (mouseX <=width*5/8.0){
+      app= new LightningDemoApp(pg,font,fontSize,lineWidth,sHeight,textFileName,"LightningDemoFrame");
     }
     else {
-      app = new IguanaDempApp(pg,font,fontSize,lineWidth,sHeight,textFileName,"IguanaDemoFrame");
+      app = new IguanaDemoApp(pg,font,fontSize,lineWidth,sHeight,textFileName,"IguanaDemoFrame");
     }
   }
   void keyPressed(){
@@ -221,11 +227,11 @@ class CheckerboardDemoApp extends CharPixelApp{
   }
 }
 
-class IguanaDempApp extends CharPixelApp{
+class IguanaDemoApp extends CharPixelApp{
   int count =0;
   boolean rot = true;
   
-  IguanaDempApp(PGraphics p,PFont f, int fs,int lw,int sh,String textFN, String outF){
+  IguanaDemoApp(PGraphics p,PFont f, int fs,int lw,int sh,String textFN, String outF){
     super(p,f,fs,lw,sh,textFN,outF);
     nbImages = 360;
     img = loadImage("iguana1884x1080.jpg");
@@ -290,13 +296,13 @@ class IguanaDempApp extends CharPixelApp{
   }
 }
 
-class LightningDempApp extends CharPixelApp{
+class LightningDemoApp extends CharPixelApp{
   int count =0;
   PImage[] imgVec =  new PImage[25];
   //int nbImages = 25;
   boolean animate = true;
   
-  LightningDempApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String outF){
+  LightningDemoApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String outF){
     super(p,f,fs,lw,sh,textFN,outF);
     nbImages = 25;
     for (int i=0; i<nbImages;i++){
@@ -406,6 +412,79 @@ class FullTextDemoApp extends CharPixelApp{
         app = new DemoChooserApp(pg,font,fontSize,lineWidth,sHeight,textFileName);
         break;
       default:
+        break;
+    }
+  }
+}
+
+class SmokeDemoApp extends CharPixelApp{
+  int count =0;
+  PImage[] imgVec =  new PImage[25];
+  //int nbImages = 25;
+  boolean animate = true;
+  
+  SmokeDemoApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String outF){
+    super(p,f,fs,lw,sh,textFN,outF);
+    nbImages = 25;
+    for (int i=0; i<nbImages;i++){
+      imgVec[i] = requestImage("Smoke_" + nf(i,5) + ".png");
+    }
+  }
+  boolean updatePgOK(){
+    return animate;
+  }
+  void updatePG(){
+    if (!instructionsRead){
+      showInstructions();
+      return;
+    }
+    pg.beginDraw();
+    pg.pushMatrix();
+    pg.background(black);
+    pg.imageMode(CENTER);
+    pg.translate(width/2.0,height/2.0);
+    pg.image(imgVec[count],0,0);
+    pg.popMatrix();
+    pg.endDraw();
+    count =  (count+1)%nbImages;
+    pauseOutput =  false;
+  }
+  
+  void showInstructions(){
+    String instructions  = "Mouse click:   toggle the display of the underlying image,\n" +
+                           "'r' or 'R' keys:   toggle use of filled rectangle to replace the ' ' space character\n" +
+                           "'t' or 'T' keys:   toggle use of true or standard character bounding box for character color computation, the type of box is displayed in the console.\n\n" +
+                           "'q' or 'Q':   return to demo selector\n\n" +
+                           "Any other key:   pause the animation\n\n\n" +
+                           "... mouse click to continue to demo";
+    displayPG = true;
+    pg.beginDraw();
+    pg.textFont(font,fontSize);
+    pg.background(black);
+    pg.fill(white);
+    pg.textAlign(LEFT);
+    pg.text(instructions,50,250);
+    pg.endDraw();
+  }
+
+  void keyPressed(){
+    switch(key){
+      case 'q':
+      case 'Q':
+        app = new DemoChooserApp(pg,font,fontSize,lineWidth,sHeight,textFileName);
+        break;
+      case 'r':
+      case 'R':
+        rectFillForSpace = !rectFillForSpace;
+        println("Using " + (rectFillForSpace ? "Filled rect" : "Background") + " for spaces!");
+        break;
+      case 't':
+      case 'T':
+        trueBox = !trueBox;
+        println("Using " + (trueBox ? "True" : "Std") + " Box!");
+        break;
+      default:
+        animate = !animate;
         break;
     }
   }

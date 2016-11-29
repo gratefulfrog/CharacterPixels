@@ -8,7 +8,7 @@
 final String screen1LinesFile = "screen1Text.txt";
 
 // set the following variable to false to prevent writing of image files;
-boolean writeImages = true;
+boolean writeImages =  true;
 
 
 PGraphics pg;
