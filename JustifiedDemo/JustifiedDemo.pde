@@ -15,7 +15,9 @@ PGraphics pg;
 App app;
 PFont tFont;
 final int fntSize  = 22;
-final int frameR = 30;
+final int frameR = 1;
+
+int renderCount = 0;
 
 int screenWidth = 1884,
     screenHeight = 1080;
@@ -35,7 +37,8 @@ void setup(){
 void draw(){
  app.draw();
  if (writeImages && app.doSave()){
-   saveFrame(app.outputFileName + "-#####.png");
+   println("Rendering Frame: " + nf(renderCount+1,3) + " of " + nf(app.nbImages,3) + "...");
+   saveFrame("Render/" + app.outputFileName + "-" + nf(renderCount++,3) + ".png");
  }
 }
 

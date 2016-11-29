@@ -298,16 +298,17 @@ class IguanaDemoApp extends CharPixelApp{
 
 class LightningDemoApp extends CharPixelApp{
   int count =0;
-  PImage[] imgVec =  new PImage[25];
+  PImage[] imgVec =  new PImage[300];
   //int nbImages = 25;
   boolean animate = true;
   
   LightningDemoApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String outF){
     super(p,f,fs,lw,sh,textFN,outF);
-    nbImages = 25;
-    for (int i=0; i<nbImages;i++){
-      imgVec[i] = requestImage("Lightning_" + nf(i,5) + ".png");
+    nbImages = 300;
+    /*for (int i=0; i<nbImages;i++){
+      imgVec[i] = loadImage("Lightning_" + nf(i,5) + ".png");
     }
+    */
   }
   boolean updatePgOK(){
     return animate;
@@ -317,12 +318,14 @@ class LightningDemoApp extends CharPixelApp{
       showInstructions();
       return;
     }
+    PImage imgG = loadImage("Lightning_" + nf(count,5) + ".png");
     pg.beginDraw();
     pg.pushMatrix();
     pg.background(black);
     pg.imageMode(CENTER);
     pg.translate(width/2.0,height/2.0);
-    pg.image(imgVec[count],0,0);
+    //while(imgVec[count].width ==0){}
+    pg.image(imgG,0,0);
     pg.popMatrix();
     pg.endDraw();
     count =  (count+1)%nbImages;
