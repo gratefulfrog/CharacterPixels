@@ -10,7 +10,7 @@ boolean isDescender(char c){
 
 class DisplayText{
   final String word = new String("AbCdefg ");
-  //String theText = new String("");
+  String theText = new String("");
   BoundingBoxMap bm;
   PGraphics pgr;
   PFont font;
@@ -27,7 +27,7 @@ class DisplayText{
     int horizPixels  = 0,
         vertPixels   = textHeight;
     bm = bbm;
-    //theText = Screen1Text;
+    theText = Screen1Text;
     textLines = new String[Screen1Lines.length];
     for (int i=0;i<Screen1Lines.length;i++){
       textLines[i]=new String(Screen1Lines[i]);
