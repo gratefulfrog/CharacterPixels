@@ -21,21 +21,16 @@ class Justifier{
     lineDelta = (screenH - lineVec.length*ch)/(lineVec.length-1);  // -1 for last \n
     
     for (int i=0; i<lineVec.length;i++){
-      //println(lineVec[i]);
       lineVec[i]+='\n';  // because reading form file does not add a \n to each line!
       float delta =  lineWidthPixels - pg.textWidth(lineVec[i]);
       String [] wordVec = split(lineVec[i],' ');
       spaceDeltaVec[i] = delta/(wordVec.length-1);  // -1 for the \n at the end!
     }
     pg.endDraw();
-   // println(lineVec.length);
-  }
-  
+   } 
 }
 
 class DisplayText{
-  //String theText = new String("");
-  //String screen1LinesFile = "/home/bob/MiscProjects/CharacterPixels/screen1Text.txt";
   BoundingBoxMap bm;
   PGraphics pgr;
   PFont font;
@@ -48,7 +43,7 @@ class DisplayText{
     font  = f;
     fontSize =  fs;
     bm = bbm;
-    textLines = loadStrings(textFileName); //new String[Screen1Lines.length];
+    textLines = loadStrings(textFileName); 
     just = new Justifier(textLines, font, fontSize, lineWidth,screenH);
   }
   
@@ -62,7 +57,6 @@ class DisplayText{
     for (int lineIndex = 0; lineIndex< textLines.length;   lineIndex++){
       String[] wordVec = split(textLines[lineIndex],' ');
       int nbWords = wordVec.length;
-      //x = textWidth(' ')+just.spaceDeltaVec[lineIndex];
       for (int wordIndex=0;wordIndex<nbWords;wordIndex++){
         int wordLength =  wordVec[wordIndex].length();
         for (int charIndex = 0; charIndex< wordLength;charIndex++){

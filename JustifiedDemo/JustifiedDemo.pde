@@ -8,14 +8,14 @@
 final String screen1LinesFile = "screen1Text.txt";
 
 // set the following variable to false to prevent writing of image files;
-boolean writeImages =  true;
+boolean writeImages =  false;
 
 
 PGraphics pg;
 App app;
 PFont tFont;
 final int fntSize  = 22;
-final int frameR = 1;
+final int frameR = 30;
 
 int renderCount = 0;
 
@@ -35,11 +35,11 @@ void setup(){
 }
 
 void draw(){
- app.draw();
- if (writeImages && app.doSave()){
-   println("Rendering Frame: " + nf(renderCount+1,3) + " of " + nf(app.nbImages,3) + "...");
-   saveFrame("Render/" + app.outputFileName + "-" + nf(renderCount++,3) + ".png");
- }
+   app.draw();
+   if (writeImages && app.doSave()){
+     println("Rendering Frame: " + nf(renderCount+1,3) + " of " + nf(app.nbImages,3) + "...");
+     saveFrame("Render/" + app.outputFileName + "-" + nf(renderCount++,3) + ".png");
+   }
 }
 
 void mousePressed(){

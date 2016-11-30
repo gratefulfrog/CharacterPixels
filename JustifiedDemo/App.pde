@@ -69,11 +69,13 @@ class DemoChooserApp extends App{
          middle =  new String("Lightning\nDemo"),
          right = new String("Friendly\nRotatating Iguana\nDemo"),
          bottom = new String("Any other key to exit"),
-         top = new String("T to display full Text");
+         top = new String("T to display full Text"),
+         render =  new String("Rendering: " + (writeImages ? "ON!" : "off"));
   
   DemoChooserApp(PGraphics p,PFont f, int fs,int lw, int sh,String textFN){
     super(p,f,fs,lw,sh,textFN,"");
     displayPG = true;
+    renderCount = 0;  // global variable....
   }
   void updatePG(){
     pg.beginDraw();
@@ -82,6 +84,15 @@ class DemoChooserApp extends App{
     pg.pushMatrix();
     pg.translate(width/2.0, 50);
     pg.text(top,0,0);
+    pg.translate(0,150);
+    if (writeImages){
+      pg.fill(green); 
+    }
+    else{
+      pg.fill(red); 
+    }
+    pg.text(render,0,0);
+    pg.fill(white);
     pg.popMatrix();
     pg.pushMatrix();
     pg.translate(0,height/2.0);
@@ -100,7 +111,12 @@ class DemoChooserApp extends App{
     pg.endDraw();
   } 
   void mousePressed(){
-    if(mouseX <=width*3/8.0){
+    if (dist(mouseX,mouseY, width/2.0,200)< 200){
+      writeImages = !writeImages;
+      render =  new String("Rendering: " + (writeImages ? "ON!" : "off"));
+      frameRate(writeImages ? 1 : 30);
+    }
+    else if(mouseX <=width*3/8.0){
       app= new SmokeDemoApp(pg,font,fontSize,lineWidth,sHeight,textFileName,"SmokeDemoFrame");
     }
     else if (mouseX <=width*5/8.0){
@@ -125,7 +141,7 @@ class CharPixelApp extends App{
   DisplayText    dt;
   boolean        trueBox          = true,
                  rectFillForSpace = false,
-                 instructionsRead = false;
+                 instructionsRead = true;
   PImage img;
   CharPixelApp(PGraphics p,PFont f, int fs, int lw,int sh,String textFN, String outF){
     super(p,f,fs,lw,sh,textFN,outF);
@@ -298,17 +314,11 @@ class IguanaDemoApp extends CharPixelApp{
 
 class LightningDemoApp extends CharPixelApp{
   int count =0;
-  PImage[] imgVec =  new PImage[300];
-  //int nbImages = 25;
   boolean animate = true;
   
   LightningDemoApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String outF){
     super(p,f,fs,lw,sh,textFN,outF);
     nbImages = 300;
-    /*for (int i=0; i<nbImages;i++){
-      imgVec[i] = loadImage("Lightning_" + nf(i,5) + ".png");
-    }
-    */
   }
   boolean updatePgOK(){
     return animate;
@@ -324,7 +334,6 @@ class LightningDemoApp extends CharPixelApp{
     pg.background(black);
     pg.imageMode(CENTER);
     pg.translate(width/2.0,height/2.0);
-    //while(imgVec[count].width ==0){}
     pg.image(imgG,0,0);
     pg.popMatrix();
     pg.endDraw();
@@ -379,6 +388,7 @@ class FullTextDemoApp extends CharPixelApp{
     super(p,f,fs,lw,sh,textFN,outF);
     img = createImage(lw,sh, RGB);
     cb = new Checkerboard(img, checkDim, false);
+    //nbImages = 5;
   }
   void updatePG(){
     if (!instructionsRead){
@@ -422,16 +432,11 @@ class FullTextDemoApp extends CharPixelApp{
 
 class SmokeDemoApp extends CharPixelApp{
   int count =0;
-  PImage[] imgVec =  new PImage[25];
-  //int nbImages = 25;
   boolean animate = true;
   
   SmokeDemoApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String outF){
     super(p,f,fs,lw,sh,textFN,outF);
     nbImages = 25;
-    for (int i=0; i<nbImages;i++){
-      imgVec[i] = requestImage("Smoke_" + nf(i,5) + ".png");
-    }
   }
   boolean updatePgOK(){
     return animate;
@@ -441,12 +446,14 @@ class SmokeDemoApp extends CharPixelApp{
       showInstructions();
       return;
     }
+    PImage imgG = loadImage("Smoke_" + nf(count,5) + ".png");
     pg.beginDraw();
     pg.pushMatrix();
     pg.background(black);
     pg.imageMode(CENTER);
     pg.translate(width/2.0,height/2.0);
-    pg.image(imgVec[count],0,0);
+    //pg.image(imgVec[count],0,0);
+    pg.image(imgG,0,0);
     pg.popMatrix();
     pg.endDraw();
     count =  (count+1)%nbImages;
