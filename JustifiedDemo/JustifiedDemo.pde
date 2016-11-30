@@ -37,8 +37,8 @@ void setup(){
 void draw(){
    app.draw();
    if (writeImages && app.doSave()){
-     println("Rendering Frame: " + nf(renderCount+1,3) + " of " + nf(app.nbImages,3) + "...");
-     saveFrame("Render/" + app.outputFileName + "-" + nf(renderCount++,3) + ".png");
+     println("Rendering Frame: " + nf(renderCount+1,5) + " of " + nf(app.nbImages,5) + "...");
+     saveFrame("Render/" + app.outputFileName + "-" + nf(renderCount++,5) + ".png");
    }
 }
 
