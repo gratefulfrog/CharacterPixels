@@ -12,9 +12,9 @@ Processing code to demo the use of text characters as pixels
 
 
 # Usage
-Just run the processing program: CharacterPixelDemo
-
-Enjoy!
+- To see what it can do, run the processing program: JustifiedOnePixelBorder
+- To do some serious rendering, run CharacterPixelRender after setting up the parameters at the top of the file `CharacterPixelRender.pde`
+- Enjoy!
 
 # Notes
 - Memoisation is used to improve efficiency in character bounding box lookup! Check it out if you don't know what it is ;-)
