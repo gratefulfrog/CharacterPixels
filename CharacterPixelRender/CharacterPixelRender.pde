@@ -16,7 +16,7 @@ final String screen1LinesFile = "screen1Text49lines.txt";
 // The font name and size MUST correspond to a fonts in the data directory!
 // The fontFamily name should be something like  "Ingeborg-Regular", or "Times-Bold" without trailing 
 // dash's.
-final String fontFamily = "Ingeborg-Regular";
+final String fontFamily = "Ingeborg-New-f-Regular";
 
 // Changing the fntSize will change the image size, and the border width;
 // Currently available values are 22, 110, 220
