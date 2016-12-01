@@ -34,9 +34,11 @@ final String baseImageFileName = "Lightning";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////                 Frames to be Rendered              /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-// The next variables determine which frames are rendered.  The startFrame is where rendering starts, and the numberOfFrames is how many to render.
-// for example if we start at frame 0 and render 3 frames, we will get frame-0, frame-1,frame-2
-// these variables are usefull to render only some specific frames after a failure, or if some of the underlying images were modified.
+// The next variables determine which frames are rendered.  The startFrame is where rendering starts, 
+// and the numberOfFrames is how many to render. For example if we start at frame 0 and render 3 frames,
+// we will get frame-0, frame-1,frame-2
+// These variables are usefull to render only some specific frames after a failure, or if some of the
+// underlying images were modified.
 final int startFrame     = 0;
 final int numberOfFrames = 300;
 
@@ -69,9 +71,9 @@ void settings(){
 void setup(){
   frameRate(normalFPS);
   pg = createGraphics(screenWidth,screenHeight);
-  tFont = loadFont("Ingeborg-Regular-" +nf(fntSize) + ".vlw");
-  println("Unsing font: Ingeborg-Regular-" +nf(fntSize) + ".vlw");
-  //exit();
+  String fName = "Ingeborg-Regular-" +nf(fntSize) + ".vlw";
+  tFont = loadFont(fName);
+  println("Unsing font: " + fName);
   app = new ChooserApp(pg,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
 }
 
@@ -84,8 +86,18 @@ void draw(){
        currentFrameID = app.outputImageCount-1;
        endFrameID  = app.nbImages-1;
      }     
-     println("Rendering Frame: " + app.baseName + "_" + nf(currentFrameID,5) + " of " + nf(endFrameID,5) + "...");
-     saveFrame("Render/" + app.baseName + "Frame-" + nf(currentFrameID,5) + ".png");
+     println("Rendering Frame: " + 
+             app.baseName + 
+             "_" + 
+             nf(currentFrameID,5) + 
+             " of " + 
+             nf(endFrameID,5) + 
+             " ...");
+     saveFrame("Render/" + 
+               app.baseName + 
+               "Frame-" + 
+               nf(currentFrameID,5) + 
+               ".png");
    }
 }
 
