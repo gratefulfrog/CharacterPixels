@@ -11,9 +11,12 @@
 final String screen1LinesFile = "screen1Text49lines.txt";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////              Font and Border Dimensions            /////////////////////////////
+///////////////////////       Font Family and Size and Border Dimensions   /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-// The font size MUST correspond to a font in the data directory!
+// The font name and size MUST correspond to a fonts in the data directory!
+// The fontFamily name should be something like  "Ingeborg-Regular", or "Times-Bold" without trailing dash's
+final String fontFamily = "Ingeborg-Regular";
+
 // Changing the fntSize will change the image size, and the border width;
 // Currently available values are 22, 110, 220
 // set the processing memory preference to 16384 MB to ensure results!!
@@ -71,7 +74,7 @@ void settings(){
 void setup(){
   frameRate(normalFPS);
   pg = createGraphics(screenWidth,screenHeight);
-  String fName = "Ingeborg-Regular-" +nf(fntSize) + ".vlw";
+  String fName = fontFamily+ "-" +nf(fntSize) + ".vlw";
   tFont = loadFont(fName);
   println("Unsing font: " + fName);
   app = new ChooserApp(pg,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
