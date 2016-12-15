@@ -13,7 +13,7 @@ final String screen1LinesFile = "screen1Text49lines.txt";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////       Font Family and Size and Border Dimensions   /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-// The font name and size MUST correspond to a fonts in the data directory!
+// The font name and size MUST correspond to a font in the data directory!
 // The fontFamily name should be something like  "Ingeborg-Regular", or "Times-Bold" without trailing 
 // dash's.
 final String fontFamily = "Ingeborg-New-f-Regular";
@@ -31,9 +31,8 @@ final int border = 3;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The following variable determines the source file name for the underlying image frames. 
 // The source image frames must be placed in the data directory.
-// The variable contains the base image file name, and to that will be added _00001.png, _00002.png etc.
+// The variable contains the base image file name, and to that will be added _00000.png, _00001.png  etc.
 final String baseImageFileName = "Lightning";
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////                 Frames to be Rendered              /////////////////////////////
@@ -77,7 +76,7 @@ void setup(){
   pg = createGraphics(screenWidth,screenHeight);
   String fName = fontFamily+ "-" +nf(fntSize) + ".vlw";
   tFont = loadFont(fName);
-  println("Unsing font: " + fName);
+  println("Using font: " + fName);
   app = new ChooserApp(pg,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
 }
 
