@@ -23,7 +23,8 @@ final int border = 3;
 ///////////////////////   NO USER MODIFIABLE VARIABLES BEYOND THIS POINT   /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 PGraphics pg;
-PFont tFont;
+PFont tFont,
+      fInfo;
 
 final int baseFontSize = 22;
 final int pixelBorder = border*fntSize/baseFontSize;
@@ -54,6 +55,7 @@ void setup(){
   tFont = loadFont(fName);
   println("Using font: " + fName);
   pg = createGraphics(800,500);
+  fInfo =  loadFont("DejaVuSans-18.vlw");
   doVisu();
 }
 
@@ -69,10 +71,9 @@ void info(){
                    "Type any key to display its boxes"};
   color[] colVec = {red,blue,black};
   
-  PFont f =  loadFont("DejaVuSans-18.vlw");
   pg.beginDraw();
   pg.background(white);
-  pg.textFont(f,18);
+  pg.textFont(fInfo,18);
   pg.textAlign(LEFT,TOP);
   for (int i=0; i<sVec.length;i++){    
     pg.fill(colVec[i]);
