@@ -141,7 +141,7 @@ class CharPixelApp extends App{
 
   CharPixelApp(PGraphics p,PFont f, int fs, int lw,int sh,String textFN, String baseFN){
     super(p,f,fs,lw,sh,textFN,baseFN);
-    bbm =  new BoundingBoxMap(font,fontSize);
+    bbm =  new BoundingBoxMap(font,fontSize,pixelBorder);
     dt = new DisplayText(bbm,pg,font,fontSize, lineWidth,sHeight, textFileName);
     
     println("Using " + (trueBox ? "True" : "Std") + " Box!");

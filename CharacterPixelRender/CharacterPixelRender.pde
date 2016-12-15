@@ -63,13 +63,12 @@ final int normalFPS = 30;
 boolean writeImages           =  false,
         specialOneFrameRender = false;
 
-int screenWidth = 1884*(fntSize/baseFontSize),
-    screenHeight = 1080*(fntSize/baseFontSize);
+final int screenWidth = 1884*(fntSize/baseFontSize),
+          screenHeight = 1080*(fntSize/baseFontSize);
     
 void settings(){
   size(screenWidth,screenHeight);
 }
-
 
 void setup(){
   frameRate(normalFPS);
