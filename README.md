@@ -12,8 +12,8 @@ Processing code to demo the use of text characters as pixels
 
 
 # Usage
-- To see what it can do, run the processing program: JustifiedOnePixelBorder
 - To do some serious rendering, run CharacterPixelRender after setting up the parameters at the top of the file `CharacterPixelRender.pde`
+- To test character spacing, run NewBoxRenderer.
 - Enjoy!
 
 # Notes
