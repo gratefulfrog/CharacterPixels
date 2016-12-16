@@ -48,11 +48,15 @@ final int numberOfFrames = 300;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+// setting this variable to true cause the program to try to compensate for font problems in 
+// horizontal spacing. Caution should be used since thi may increase line lenght and cause overlaps.
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+boolean useCompensatedWidth = true;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////   NO USER MODIFIABLE VARIABLES BEYOND THIS POINT   /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-PGraphics pg;
+PGraphics pgA;
 App app;
 PFont tFont;
 
@@ -72,11 +76,12 @@ void settings(){
 
 void setup(){
   frameRate(normalFPS);
-  pg = createGraphics(screenWidth,screenHeight);
+  pgA = createGraphics(screenWidth,screenHeight);
   String fName = fontFamily+ "-" +nf(fntSize) + ".vlw";
   tFont = loadFont(fName);
   println("Using font: " + fName);
-  app = new ChooserApp(pg,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
+  println("Using " + (useCompensatedWidth ? "Compensated" : "Standard") + " horizontal spacing!");
+  app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
 }
 
 void draw(){

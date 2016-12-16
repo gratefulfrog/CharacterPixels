@@ -10,7 +10,7 @@ final String fontFamily = "Ingeborg-New-f-Regular";
 // Changing the fntSize will change the image size, and the border width;
 // Currently available values are 22, 110, 220
 // set the processing memory preference to 16384 MB to ensure results!!
-final int fntSize  = 220;
+final int fntSize  = 22;
 
 // This is the number of pixels at the smallest font, it will be scaled if bigger font is specified!
 final int border = 3;
@@ -22,7 +22,7 @@ final int border = 3;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////   NO USER MODIFIABLE VARIABLES BEYOND THIS POINT   /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-PGraphics pg;
+PGraphics pgA;
 PFont tFont,
       fInfo;
 
@@ -54,59 +54,59 @@ void setup(){
   String fName = fontFamily+ "-" +nf(fntSize) + ".vlw";
   tFont = loadFont(fName);
   println("Using font: " + fName);
-  pg = createGraphics(800,500);
+  pgA = createGraphics(800,500);
   fInfo =  loadFont("DejaVuSans-18.vlw");
   doVisu();
 }
 
 void draw(){
-  image(pg,0,0);
+  image(pgA,0,0);
   info();
 }
 
 void info(){
-  PGraphics pg = createGraphics(screenWidth-infoX,screenHeight-infoY);      
+  PGraphics pgI = createGraphics(screenWidth-infoX,screenHeight-infoY);      
   String[] sVec = {"the RED box is the theoretical postion of the character",
                    "the BLUE box is the computed bounding box of the character",
                    "Type any key to display its boxes"};
   color[] colVec = {red,blue,black};
   
-  pg.beginDraw();
-  pg.background(white);
-  pg.textFont(fInfo,18);
-  pg.textAlign(LEFT,TOP);
+  pgI.beginDraw();
+  pgI.background(white);
+  pgI.textFont(fInfo,18);
+  pgI.textAlign(LEFT,TOP);
   for (int i=0; i<sVec.length;i++){    
-    pg.fill(colVec[i]);
-    pg.text(sVec[i],0,50*i);
+    pgI.fill(colVec[i]);
+    pgI.text(sVec[i],0,50*i);
   }
-  pg.endDraw();
-  image(pg,infoX,infoY);
+  pgI.endDraw();
+  image(pgI,infoX,infoY);
 }
 
 void doVisu(){
-  pg.beginDraw();
-  pg.background(white);
-  pg.fill(black);
-  pg.textFont(tFont);
-  pg.stroke(black);
-  pg.textAlign(LEFT,TOP);
-  float h = pg.textAscent() + pg.textDescent() + epsilon;
-  pg.pushStyle();
-  pg.fill(white,0);
-  pg.stroke(red);  // RED is the theoretical box
+  pgA.beginDraw();
+  pgA.background(white);
+  pgA.fill(black);
+  pgA.textFont(tFont);
+  pgA.stroke(black);
+  pgA.textAlign(LEFT,TOP);
+  float h = pgA.textAscent() + pgA.textDescent() + epsilon;
+  pgA.pushStyle();
+  pgA.fill(white,0);
+  pgA.stroke(red);  // RED is the theoretical box
   // theoretical bounding box
   float x1 = left,
         y1 = top,
-        x2 = left+pg.textWidth(c),
+        x2 = left+pgA.textWidth(c),
         y2 = y1,
         x3 = x2,
         y3 = top+h-epsilon,
         x4 = x1,
         y4 = y3;
-  pg.quad(x1,y1,x2,y2,x3,y3,x4,y4);
+  pgA.quad(x1,y1,x2,y2,x3,y3,x4,y4);
   BoundingBoxMap bbm =  new BoundingBoxMap(tFont,fntSize,pixelBorder);
   BoundingBox bx = bbm.get(c);
-  pg.stroke(blue);   // BLUE is the true bounding box
+  pgA.stroke(blue);   // BLUE is the true bounding box
   // real bounding box
    x1 = left + bx.left;
         y1 = top  + bx.top;
@@ -116,19 +116,45 @@ void doVisu(){
         y3 = top + bx.bottom;
         x4 = x1;
         y4 = y3;
-  pg.quad(x1,y1,x2,y2,x3,y3,x4,y4);
-  pg.popStyle();
-  pg.text(c,left,top);
-  pg.endDraw();
+  pgA.quad(x1,y1,x2,y2,x3,y3,x4,y4);
+  pgA.popStyle();
+  if (c=='\n'){
+    return;
+  }
+  pgA.text(c,left,top);
+  pgA.endDraw();
   println("\nChar:\t",c);
+  bx.prin();
+  /*
   println("Height:\t",h-epsilon);
-  println("Width:\t",pg.textWidth(c));
+  println("Width:\t",pgA.textWidth(c));
   println("left:\t",bx.left,bx.left < 0 ? "!!!" : "");
-  println("Right:\t",bx.right, bx.right>pg.textWidth(c) ? "!!!" : "");
+  println("Right:\t",bx.right, bx.right>pgA.textWidth(c) ? "!!!" : "");
   println("Top:\t", bx.top, bx.top < 0 ? "!!!" : "");
   println("Bottom:\t",bx.bottom, bx.bottom>h-epsilon ? "!!!" : "");
+  println("Left Compensation\t:",bx.leftCompensation);
+  println("Right Compensation\t:",bx.rightCompensation);
+  
+  println("std width of ABCD EFGHIJKLM  PNOPQRSTU VWXYZ ", pgA.textWidth("The point is that if we are to have a rich and full life in which all are to share and play their parts if the American dream is to be a reality our communal spiritual\n"));
+  println("compensated width of ABCD EFGHIJKLM  PNOPQRSTU VWXYZ slash n", textWidth("The point is that if we are to have a rich and full life in which all are to share and play their parts if the American dream is to be a reality our communal spiritual\n",bbm,tFont,fntSize));
+  */
 }
 
+float textWidth(char c, BoundingBoxMap bm, PFont f, int fs){
+  BoundingBox b = bm.get(c);
+  pushStyle();
+  textFont(f,fs);
+  float rawWidth  = (c=='\n' ? 0 :textWidth(c));
+  popStyle();
+  return rawWidth + b.leftCompensation + b.rightCompensation;
+}
+float textWidth(String s, BoundingBoxMap bm, PFont f, int fs){
+  float ret = 0;
+  for (int i=0;i<s.length();i++){
+    ret += textWidth(s.charAt(i),bm, f, fs);
+  }
+  return ret;
+}
 
 void keyPressed(){
   if (key != CODED){

@@ -73,10 +73,10 @@ class BoundingBoxMap{
         }
       }
     }
-    return -999;
+    return 0;
   }
   int Bottom(PGraphics g){
-    int ret = -1;
+    int ret = 0;
     for (int ih=0;ih<g.height;ih++){
       for (int iw=0; iw<g.width;iw++){
         color c = g.get(iw,ih);
