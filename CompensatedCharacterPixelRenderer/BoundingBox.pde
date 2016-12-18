@@ -58,12 +58,38 @@ class BoundingBoxMap{
     b.left   = Left(pg,b.top+pixBord,b.bottom+pixBord);
     b.right  = Right(pg,b.top+pixBord,b.bottom+pixBord);
     if (c !=' '){
-      b.leftCompensation = b.left<0 ? -b.left :0;
-      b.rightCompensation =  b.right > pg.textWidth(c) ? b.right - pg.textWidth(c) : 0; 
+      //b.leftCompensation = b.left<0 ? -b.left :0;
+      b.leftCompensation = getLeftCompensation(c,b);
+      //b.rightCompensation =  b.right > pg.textWidth(c) ? b.right - pg.textWidth(c) : 0; 
+      b.rightCompensation = geRightCompensation(c, b, pg);
     }
     hm.put(c,b);
     return b;
   }
+  float getLeftCompensation(char c, BoundingBox b){
+    float res = 0.0;
+    FixedHorizontalCompensation fhc = fHCM.get(c);
+    if (fhc == null || !fhc.compensateLeft){
+      res = b.left<0 ? -b.left :0;
+    }
+    else{
+      res = fhc.leftCompensation;
+    }
+    return res;
+  }
+
+  float geRightCompensation(char c, BoundingBox b, PGraphics pg){
+    float res = 0.0;
+    FixedHorizontalCompensation fhc = fHCM.get(c);
+    if (fhc == null || !fhc.compensateRight){
+      res = b.right > pg.textWidth(c) ? b.right - pg.textWidth(c) : 0; 
+    }
+    else{
+      res = fhc.rightCompensation;
+    }
+    return res;
+  }
+  
   int Top(PGraphics g){
     for (int ih=0;ih<g.height;ih++){
       for (int iw=0; iw<g.width;iw++){

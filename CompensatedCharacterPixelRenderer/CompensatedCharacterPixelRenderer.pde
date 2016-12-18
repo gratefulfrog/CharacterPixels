@@ -21,7 +21,13 @@ final String fontFamily = "Ingeborg-New-f-Regular";
 // Changing the fntSize will change the image size, and the border width;
 // Currently available values are 22, 110, 220
 // set the processing memory preference to 16384 MB to ensure results!!
+// BE SURE TO SET THE FONT INDEX TO THE APPROPRIATE VALUE to get the left and right compensation to work!!
 final int fntSize  = 22;
+final int fontIndex = 0;   
+/* font index:
+ * 0: Ingeborg-New-f-Regular 22
+ * 1: Ingeborg-New-f-Regular 220
+*/
 
 // This is the number of pixels at the smallest font, it will be scaled if bigger font is specified!
 final int border = 3;
@@ -46,12 +52,15 @@ final int startFrame     = 0;
 final int numberOfFrames = 300;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// FONT HORIZONTAL SPACING COMPENSATION ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // setting this variable to true cause the program to try to compensate for font problems in 
 // horizontal spacing. Caution should be used since thi may increase line lenght and cause overlaps.
 
 boolean useCompensatedWidth = true;
+
+// BE SURE TO SET UP ANY MANAULLY CALCULATED LEFT and/or RIGHT horizontal compensation 
+// in the FontConfig tab!!!!!!!!  I AM SERIOUS, DO IT !!
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////   NO USER MODIFIABLE VARIABLES BEYOND THIS POINT   /////////////////////////////
@@ -59,6 +68,8 @@ boolean useCompensatedWidth = true;
 PGraphics pgA;
 App app;
 PFont tFont;
+
+FixedHorizontalCompensationMap fHCM;
 
 final int baseFontSize = 22;
 final int pixelBorder = border*fntSize/baseFontSize;
@@ -81,6 +92,8 @@ void setup(){
   tFont = loadFont(fName);
   println("Using font: " + fName);
   println("Using " + (useCompensatedWidth ? "Compensated" : "Standard") + " horizontal spacing!");
+  fHCM = new FixedHorizontalCompensationMap();
+  FontConf fc =   new FontConf(fHCM, fontIndex);
   app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
 }
 
