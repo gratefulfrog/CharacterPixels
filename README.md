@@ -1,6 +1,16 @@
 # CharacterPixels
-Processing code to demo the use of text characters as pixels
-# Check out the Video!
+Processing code implementing the use of text characters as pixels
+
+# Usage
+- To do some **Super Serious rendering**, run `CompensatedCharacterPixelRender` after reading the instructions and setting up the parameters.
+- To visualize character spacing, run `NewBoxRenderer`.
+- Enjoy!
+
+# Notes
+- Memoisation is used to improve efficiency in character bounding box lookup! Check it out if you don't know what it is ;-)
+- `CompensatedCharacterPixelRender` uses a csv file to proivde the user with fine horizontal spacing adjustments of individual characters.
+
+# Check out some Video Demos!
 
 [Character Pixels: The Full Text Version!](https://youtu.be/rrVtNiJrFVA)  (Shows both demos with a genuine text in 12px characters)
 
@@ -9,13 +19,3 @@ Processing code to demo the use of text characters as pixels
 [Character Pixels: The Friendly Rotating Iguana](https://youtu.be/krbMmw7lCLs) (shows how really cool this can be!)
 
 [Character Pixels: The BIG Film](https://youtu.be/enDxRxBbZ-4) (with 48px Characters)
-
-
-# Usage
-- To do some serious rendering, run CharacterPixelRender after setting up the parameters at the top of the file `CharacterPixelRender.pde`
-- To test character spacing, run NewBoxRenderer.
-- Enjoy!
-
-# Notes
-- Memoisation is used to improve efficiency in character bounding box lookup! Check it out if you don't know what it is ;-)
-
