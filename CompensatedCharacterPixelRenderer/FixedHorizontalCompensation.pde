@@ -33,6 +33,9 @@ class FixedHorizontalCompensationMap{
   FixedHorizontalCompensation get(char c){
     return hm.get(c);
   }
+  int size(){
+    return hm.size();
+  }
   
   void putB(char c, float l, float r){
     FixedHorizontalCompensation fhc = new FixedHorizontalCompensation();
@@ -61,22 +64,6 @@ class FixedHorizontalCompensationMap{
     }
     hm.put(c,fhc);
     return fhc;
-  }
-}
-
-class FontFixedHorizontalCompensationMap{
-  HashMap<String, FixedHorizontalCompensationMap> hm;
-
-  FontFixedHorizontalCompensationMap(){
-    hm = new HashMap<String, FixedHorizontalCompensationMap>();
-  }
-  
-  FixedHorizontalCompensationMap get(String s){
-    return hm.get(s);
-  }
-  
-  void put(String s, FixedHorizontalCompensationMap fm){
-    hm.put(s,fm);
   }
 }
 
