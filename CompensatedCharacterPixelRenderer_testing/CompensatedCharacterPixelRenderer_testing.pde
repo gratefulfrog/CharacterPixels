@@ -10,7 +10,7 @@ import processing.svg.*;
 // if the file name is given without a full path, then it must be in the data directory
 // if not it can be anywhere!
 
-final String screenLinesFile = "screen1Text49lines.txt";
+final String g_screenLinesFile = "screen1Text49lines.txt";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////   Font Family & Size and Screen & Border Dimensions   ////////////////////////////
@@ -19,20 +19,20 @@ final String screenLinesFile = "screen1Text49lines.txt";
 // The fontFamily name should be something like  "Ingeborg-New-f", or "Times" without trailing 
 // dash's.
 // to ensure correct font generation, place the original font file in the data directory!
-final String fontFamily = "Ingeborg-New-f";
+final String g_fontFamily = "Ingeborg-New-f";
 
 // point size of font
-final int fntSize  = 22;
+final int g_fntSize  = 22;
 
 // This is the number of pixels to be used as a border on all sides of the text
-final int leftborder  = 3;
-final int rightborder = 3;
-final int upperborder = 2;
-final int lowerborder = 8;  // needs to be bigger for charcters with descent, eg. y, g, q, p ...
+final int g_leftborder  = 3;
+final int g_rightborder = 3;
+final int g_upperborder = 2;
+final int g_lowerborder = 8;  // needs to be bigger for charcters with descent, eg. y, g, q, p ...
 
 // screen size in pixels
-final int screenWidth  = 1884;
-final int screenHeight = 1080;
+final int g_screenWidth  = 1884;
+final int g_screenHeight = 1080;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////           Image Files Input File Base Name         /////////////////////////////
@@ -40,7 +40,7 @@ final int screenHeight = 1080;
 // The following variable determines the source file name for the underlying image frames. 
 // The source image frames must be placed in the data directory.
 // The variable contains the base image file name, and to that will be added _00000.png, _00001.png  etc.
-final String baseImageFileName = "Lightning";
+final String g_baseImageFileName = "Lightning";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////                 Frames to be Rendered              /////////////////////////////
@@ -50,12 +50,12 @@ final String baseImageFileName = "Lightning";
 // we will get frame-0, frame-1,frame-2
 // These variables are usefull to render only some specific frames after a failure, or if some of the
 // underlying images were modified.
-final int startFrame     = 0;
-final int numberOfFrames = 5; //300;
+final int g_startFrame     = 0;
+final int g_numberOfFrames = 300;
 
 // directory where the rendered frames are saved
 
-final String renderDirectory = "Render";
+final String g_renderDirectory = "Render";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////// FONT HORIZONTAL SPACING COMPENSATION ////////////////////////////////
@@ -63,98 +63,112 @@ final String renderDirectory = "Render";
 // setting this variable to true cause the program to try to compensate for font problems in 
 // horizontal spacing. Caution should be used since thi may increase line length and cause overlaps.
 
-boolean useCompensatedWidth = true;
+boolean g_useCompensatedWidth = true;
 
 // This is the name of the csv file in the data directory that contains any manual horizontal compensation
-final String compensationFileName = "compINF22.csv"; 
+final String g_compensationFileName = "compINF22.csv"; 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////   NO USER MODIFIABLE VARIABLES BEYOND THIS POINT   /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-PGraphics pgA;
-App app;
-PFont tFont;
+PGraphics g_pgA;
+App g_app;
+PFont g_tFont;
 
-FixedHorizontalCompensationMap fHCM;
+FixedHorizontalCompensationMap g_fHCM;
 
-final String separator = "/";
-final String renderDir = renderDirectory + separator;
+final String g_separator = "/";
+final String g_renderDir = g_renderDirectory + g_separator;
 
-final String svgFileName = split(screenLinesFile,".")[0] + ".svg";
+final String g_svgFileName = split(g_screenLinesFile,".")[0] + ".svg";
 
-final int[] pixelBorderVec = {leftborder,rightborder,upperborder,lowerborder};
-final int leftIndex  = 0,
-          rightIndex = 1,
-          upperIndex = 2,
-          lowerIndex = 3;
+final int[] g_pixelBorderVec = {g_leftborder,g_rightborder,g_upperborder,g_lowerborder};
+final int g_leftIndex  = 0,
+          g_rightIndex = 1,
+          g_upperIndex = 2,
+          g_lowerIndex = 3;
 
-final int normalFPS = 30;
+final int g_normalFPS = 30;
 
-boolean writeImages           = false,
-        specialOneFrameRender = false,
-        writeSVG              = false;
+boolean g_writeImages           = false,
+        g_specialOneFrameRender = false,
+        g_writeSVG              = false;
+
+color g_bg = #AFA1A1,// beige,
+      g_red = #FF0000,
+      g_blue =#0000FF,
+      g_green = #00FF00,
+      g_white = #FFFFFF,
+      g_black = #000000;
 
 void settings(){
-  size(screenWidth,screenHeight);
+  size(g_screenWidth,g_screenHeight);
 }
 
 void setup(){
-  frameRate(normalFPS);
-  pgA = createGraphics(screenWidth,screenHeight);
-  String fName = fontFamily+ "-" +nf(fntSize) + ".vlw";
-  tFont = createFont(fontFamily,22,true);
-  println("Using font: " + fName);
-  println("Using " + (useCompensatedWidth ? "Compensated" : "Standard") + " horizontal spacing!");
-  fHCM = loadHorizontalCompensation();
-  if (useCompensatedWidth && (fHCM.size() !=0)){
-    println("Using manual compensation values from file: " + compensationFileName);
+  frameRate(g_normalFPS);
+  /*
+  final int nbChars = g_Chars.length();
+  char [] charSet = new char[nbChars];
+  for (int i=0;i<nbChars;i++){
+    charSet[i] = g_Chars.charAt(i);
   }
-  app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screenLinesFile,baseImageFileName);
+  */
+  g_pgA = createGraphics(g_screenWidth,g_screenHeight);
+  String fName = g_fontFamily+ "-" +nf(g_fntSize);
+  g_tFont = createFont(g_fontFamily,22,true);
+  println("Using font: " + fName);
+  println("Using " + (g_useCompensatedWidth ? "Compensated" : "Standard") + " horizontal spacing!");
+  g_fHCM = loadHorizontalCompensation();
+  if (g_useCompensatedWidth && (g_fHCM.size() !=0)){
+    println("Using manual compensation values from file: " + g_compensationFileName);
+  }
+  g_app = new ChooserApp(g_pgA,g_tFont,g_fntSize,g_screenWidth,g_screenHeight,g_screenLinesFile,g_baseImageFileName);
 }
 
 void draw(){
-   if (app.doRecordSVG){
-      beginRecord(SVG, renderDir + svgFileName);
+   if (g_app.doRecordSVG){
+      beginRecord(SVG, g_renderDir + g_svgFileName);
       println("Rendering SVG file: " + 
-             svgFileName + 
+             g_svgFileName + 
               "...");
     }
-   app.draw();
-   if (writeImages && app.doSave()){
-     int currentFrameID = app.outputImageCount-1 + startFrame,
-         endFrameID = startFrame+numberOfFrames-1; 
-     if (specialOneFrameRender){
-        currentFrameID = app.outputImageCount-1;
-        endFrameID  = app.nbImages-1;
+   g_app.draw();
+   if (g_writeImages && g_app.doSave()){
+     int currentFrameID = g_app.outputImageCount-1 + g_startFrame,
+         endFrameID = g_startFrame+g_numberOfFrames-1; 
+     if (g_specialOneFrameRender){
+        currentFrameID = g_app.outputImageCount-1;
+        endFrameID  = g_app.nbImages-1;
      }         
      println("Rendering Frame: " + 
-             app.baseName + 
+             g_app.baseName + 
              "_" + 
              nf(currentFrameID,5) + 
              " of " + 
              nf(endFrameID,5) + 
              " ...");
-     saveFrame(renderDir + 
-               app.baseName + 
+     saveFrame(g_renderDir + 
+               g_app.baseName + 
                "Frame-" + 
                nf(currentFrameID,5) + 
                ".png");
    }
-     if(app.doRecordSVG){
+     if(g_app.doRecordSVG){
       endRecord();
-      app.doRecordSVG=false;
+      g_app.doRecordSVG=false;
       println("SVG Render Complete!");
-      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screenLinesFile,baseImageFileName);
+      g_app = new ChooserApp(g_pgA,g_tFont,g_fntSize,g_screenWidth,g_screenHeight,g_screenLinesFile,g_baseImageFileName);
     }
-    if (app.stopRendering){
+    if (g_app.stopRendering){
       println("PNG Render Complete!");
-      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screenLinesFile,baseImageFileName);
+      g_app = new ChooserApp(g_pgA,g_tFont,g_fntSize,g_screenWidth,g_screenHeight,g_screenLinesFile,g_baseImageFileName);
     }
 }
 
 void mousePressed(){
-  app.mousePressed();
+  g_app.mousePressed();
 }
 void keyPressed(){
-  app.keyPressed();
+  g_app.keyPressed();
 }

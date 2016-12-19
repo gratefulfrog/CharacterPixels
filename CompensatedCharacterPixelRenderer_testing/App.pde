@@ -1,10 +1,3 @@
-color bg = #AFA1A1,// beige,
-      red = #FF0000,
-      blue =#0000FF,
-      green = #00FF00,
-      white = #FFFFFF,
-      black = #000000;
-      
 class App{
   PFont     font;
   PGraphics pgA;
@@ -32,7 +25,7 @@ class App{
     imageMode(CENTER);
   }
   void draw(){
-    background(black);
+    background(g_black);
     if (updatePgOK()){
       updatePG();
     }
@@ -71,8 +64,8 @@ class App{
 
 class ChooserApp extends App{
   String top    = "Full Text",
-         render = "Render PNG: " + (writeImages ? "ON!" : "off"),
-         svgRender = "Generate SVG: " + (writeSVG ? "ON!" : "off"),
+         render = "Render PNG: " + (g_writeImages ? "ON!" : "off"),
+         svgRender = "Generate SVG: " + (g_writeSVG ? "ON!" : "off"),
          bottom = "Any key to exit";
   String  instructions  = "During Animation and/or Rendering:\n\n" +
                           "   *  Mouse click:   toggle the display of the underlying image,\n\n" +
@@ -91,31 +84,31 @@ class ChooserApp extends App{
   
   void updatePG(){
     pgA.beginDraw();
-    pgA.background(black);
-    pgA.textFont(font,fntSize);
+    pgA.background(g_black);
+    pgA.textFont(font,fontSize);
     pgA.textAlign(LEFT,CENTER);
     pgA.pushMatrix();
     pgA.translate(leftMargin, lineSpace);
     pgA.text(top,0,0);
     pgA.translate(0,lineSpace);
-    if (writeImages){
-      pgA.fill(green); 
+    if (g_writeImages){
+      pgA.fill(g_green); 
     }
     else{
-      pgA.fill(red); 
+      pgA.fill(g_red); 
     }
     pgA.text(render,0,0);
     pgA.pushMatrix();
-    if (writeSVG){
-      pgA.fill(green); 
+    if (g_writeSVG){
+      pgA.fill(g_green); 
     }
     else{
-      pgA.fill(red); 
+      pgA.fill(g_red); 
     }
     pgA.translate(lineSpace*2,0);
     pgA.text(svgRender,0,0);
     pgA.popMatrix();
-    pgA.fill(white);
+    pgA.fill(g_white);
     pgA.translate(0,lineSpace);
     pgA.text(baseImageFileName,0,0);
     pgA.translate(0, lineSpace);
@@ -127,29 +120,29 @@ class ChooserApp extends App{
   } 
   void mousePressed(){
     if (mouseY< 1.5*lineSpace){
-      app = new FullTextApp(pgA,font,fontSize,lineWidth, sHeight,textFileName,textFileName);
+      g_app = new FullTextApp(pgA,font,fontSize,lineWidth, sHeight,textFileName,textFileName);
     }
      else if(mouseY< 2.5*lineSpace && (mouseX < leftMargin +textWidth(render)/2.0+ lineSpace)){
-      writeImages = !writeImages;
-      if (writeImages){
-        writeSVG = false;
+      g_writeImages = !g_writeImages;
+      if (g_writeImages){
+        g_writeSVG = false;
       }
     }
      else if(mouseY< 2.5*lineSpace){
-      writeSVG = !writeSVG;
-      if(writeSVG){
-        writeImages = false;
+      g_writeSVG = !g_writeSVG;
+      if(g_writeSVG){
+        g_writeImages = false;
       }
     }
     else if(mouseY< 3.5*lineSpace){
-     app= new RenderApp(pgA,font,fontSize,lineWidth,sHeight,textFileName,baseImageFileName);
+     g_app= new RenderApp(pgA,font,fontSize,lineWidth,sHeight,textFileName,baseImageFileName);
     }
     else {
       exit();
     }
-    render =  new String("Render PNG: " + (writeImages ? "ON!" : "off"));
-    svgRender = "Generate SVG: " + (writeSVG ? "ON!" : "off");
-    frameRate(writeImages ? 1 : normalFPS);
+    render =  new String("Render PNG: " + (g_writeImages ? "ON!" : "off"));
+    svgRender = "Generate SVG: " + (g_writeSVG ? "ON!" : "off");
+    frameRate(g_writeImages ? 1 : g_normalFPS);
   }
   void keyPressed(){
       exit();
@@ -162,7 +155,7 @@ class CharPixelApp extends App{
 
   CharPixelApp(PGraphics p,PFont f, int fs, int lw,int sh,String textFN, String baseFN){
     super(p,f,fs,lw,sh,textFN,baseFN);
-    bbm =  new BoundingBoxMap(font,fontSize,pixelBorderVec);
+    bbm =  new BoundingBoxMap(font,fontSize,g_pixelBorderVec);
     dt = new DisplayText(bbm,pgA,font,fontSize, lineWidth,sHeight, textFileName);
   }
   void draw(){
@@ -179,10 +172,10 @@ class RenderApp extends CharPixelApp{
 
   RenderApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String baseFN){
     super(p,f,fs,lw,sh,textFN,baseFN);
-    displayImageCount = startFrame;
-    nbImages = numberOfFrames;
-    specialOneFrameRender = false;
-    writeSVG = false;
+    displayImageCount = g_startFrame;
+    nbImages = g_numberOfFrames;
+    g_specialOneFrameRender = false;
+    g_writeSVG = false;
   }
   
   boolean updatePgOK(){
@@ -191,18 +184,18 @@ class RenderApp extends CharPixelApp{
   
   void updatePG(){
     PImage imgG = loadImage(baseName + "_" + nf(displayImageCount,5) + ".png");
-    if (!writeImages){ // || !(outputImageCount< nbImages)){
+    if (!g_writeImages){ // || !(outputImageCount< nbImages)){
       println("Displaying: " + (baseName + "_" + nf(displayImageCount,5) + ".png"));
     }
     pgA.beginDraw();
     pgA.pushMatrix();
-    pgA.background(black);
+    pgA.background(g_black);
     pgA.imageMode(CENTER);
     pgA.translate(width/2.0,height/2.0);
     pgA.image(imgG,0,0);
     pgA.popMatrix();
     pgA.endDraw();
-    displayImageCount =  (displayImageCount+1 == startFrame+nbImages ? startFrame : displayImageCount+1);
+    displayImageCount =  (displayImageCount+1 == g_startFrame+nbImages ?g_startFrame : displayImageCount+1);
     pauseOutput =  false;
   }
 
@@ -210,7 +203,7 @@ class RenderApp extends CharPixelApp{
     switch(key){
       case 'q':
       case 'Q':
-        app = new ChooserApp(pgA,font,fontSize,lineWidth,sHeight,textFileName,baseImageFileName);
+        g_app = new ChooserApp(pgA,font,fontSize,lineWidth,sHeight,textFileName,g_baseImageFileName);
         break;
       default:
         animate = !animate;
@@ -223,21 +216,21 @@ class FullTextApp extends CharPixelApp{
   PImage img;
   FullTextApp(PGraphics p,PFont f, int fs,int lw,int sh, String textFN, String outF){
     super(p,f,fs,lw,sh,textFN,outF);
-    specialOneFrameRender = true;
+    g_specialOneFrameRender = true;
     img = createImage(lw,sh, RGB);
     img.loadPixels();
     for (int i=0; i<height;i++){
       for (int j = 0; j<width;j++){
-        img.pixels[j+width*i] = white;    
+        img.pixels[j+width*i] = g_white;    
       }
     }
     img.updatePixels();
-    doRecordSVG = writeSVG; //true;
+    doRecordSVG = g_writeSVG; //true;
   }
   void updatePG(){
     pgA.beginDraw();
     pgA.imageMode(CORNER);
-    pgA.background(black);
+    pgA.background(g_black);
     pgA.image(img,0,0);
     pgA.endDraw();
     displayImageCount = 0;
@@ -248,7 +241,7 @@ class FullTextApp extends CharPixelApp{
     switch(key){
       case 'q':
       case 'Q':
-        app = new ChooserApp(pgA,font,fontSize,lineWidth,sHeight,textFileName,baseImageFileName);
+        g_app = new ChooserApp(pgA,font,fontSize,lineWidth,sHeight,textFileName,g_baseImageFileName);
         break;
       default:
         break;

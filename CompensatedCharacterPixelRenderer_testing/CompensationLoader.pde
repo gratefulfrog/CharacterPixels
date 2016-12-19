@@ -8,7 +8,7 @@ CsvReader compReader;
 FixedHorizontalCompensationMap loadHorizontalCompensation(){
   FixedHorizontalCompensationMap fhcm = new FixedHorizontalCompensationMap();
   try {
-    compReader = new CsvReader(dataPath("") + separator + compensationFileName);
+    compReader = new CsvReader(dataPath("") + g_separator + g_compensationFileName);
 
     compReader.readHeaders();
     while (compReader.readRecord()){

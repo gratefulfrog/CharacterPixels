@@ -10,7 +10,7 @@ class BoundingBox{
  BoundingBox(){
  }
  void prin(){
-   println("Top\t:",top,"Bottom\t",bottom,"Left\t:",left,"Right\t",right,"Lcomp\t",leftCompensation,"Rcomp\t:",rightCompensation);
+   println("Top: ",top,"Bottom: ",bottom,"Left: ",left,"Right: ",right,"Lcomp: ",leftCompensation,"Rcomp: ",rightCompensation);
  }
 }
 
@@ -54,9 +54,14 @@ class BoundingBoxMap{
     pg.endDraw();
     b.top    = Top(pg);
     b.bottom = Bottom(pg);
+     if (b.top == b.bottom){
+      b.bottom++;
+    }
     // optimized: only look for left and right between top and bottom!
     b.left   = Left(pg,b.top+pixBord,b.bottom+pixBord);
     b.right  = Right(pg,b.top+pixBord,b.bottom+pixBord);
+    
+   
     if (c !=' '){
       b.leftCompensation = b.left<0 ? -b.left :0;
       b.rightCompensation =  b.right > pg.textWidth(c) ? b.right - pg.textWidth(c) : 0; 

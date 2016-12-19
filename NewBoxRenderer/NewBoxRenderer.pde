@@ -125,19 +125,6 @@ void doVisu(){
   pgA.endDraw();
   println("\nChar:\t",c);
   bx.prin();
-  /*
-  println("Height:\t",h-epsilon);
-  println("Width:\t",pgA.textWidth(c));
-  println("left:\t",bx.left,bx.left < 0 ? "!!!" : "");
-  println("Right:\t",bx.right, bx.right>pgA.textWidth(c) ? "!!!" : "");
-  println("Top:\t", bx.top, bx.top < 0 ? "!!!" : "");
-  println("Bottom:\t",bx.bottom, bx.bottom>h-epsilon ? "!!!" : "");
-  println("Left Compensation\t:",bx.leftCompensation);
-  println("Right Compensation\t:",bx.rightCompensation);
-  
-  println("std width of ABCD EFGHIJKLM  PNOPQRSTU VWXYZ ", pgA.textWidth("The point is that if we are to have a rich and full life in which all are to share and play their parts if the American dream is to be a reality our communal spiritual\n"));
-  println("compensated width of ABCD EFGHIJKLM  PNOPQRSTU VWXYZ slash n", textWidth("The point is that if we are to have a rich and full life in which all are to share and play their parts if the American dream is to be a reality our communal spiritual\n",bbm,tFont,fntSize));
-  */
 }
 
 float textWidth(char c, BoundingBoxMap bm, PFont f, int fs){

@@ -10,7 +10,7 @@ class BoundingBox{
  BoundingBox(){
  }
  void prin(){
-   println("Top\t:",top,"Bottom\t",bottom,"Left\t:",left,"Right\t",right,"Lcomp\t",leftCompensation,"Rcomp\t:",rightCompensation);
+   println("Top: ",top,"Bottom: ",bottom,"Left: ",left,"Right: ",right,"Lcomp: ",leftCompensation,"Rcomp: ",rightCompensation);
  }
 }
 
@@ -27,7 +27,7 @@ class BoundingBoxMap{
     pixBordVec = pbV;
     pushStyle();
     textFont(font,fontSize);
-    gHeight =  round(textAscent() + textDescent() + pixBordVec[upperIndex] + pixBordVec[lowerIndex]);
+    gHeight =  round(textAscent() + textDescent() + pixBordVec[g_upperIndex] + pixBordVec[g_lowerIndex]);
     popStyle();
     hm = new HashMap<Character,BoundingBox>();
   }
@@ -48,19 +48,17 @@ class BoundingBoxMap{
     pg.beginDraw();
     pg.textFont(font, fontSize);
     pg.textAlign(LEFT,TOP);
-    pg.background(white);
-    pg.fill(black);
-    pg.text(c,pixBordVec[leftIndex],pixBordVec[upperIndex]);
+    pg.background(g_white);
+    pg.fill(g_black);
+    pg.text(c,pixBordVec[g_leftIndex],pixBordVec[g_upperIndex]);
     pg.endDraw();
     b.top    = Top(pg);
     b.bottom = Bottom(pg);
     // optimized: only look for left and right between top and bottom!
-    b.left   = Left(pg,b.top+pixBordVec[leftIndex],b.bottom+pixBordVec[upperIndex]);
-    b.right  = Right(pg,b.top+pixBordVec[leftIndex],b.bottom+pixBordVec[upperIndex]);
+    b.left   = Left(pg,b.top+pixBordVec[g_upperIndex],b.bottom+pixBordVec[g_upperIndex]);
+    b.right  = Right(pg,b.top+pixBordVec[g_upperIndex],b.bottom+pixBordVec[g_upperIndex]);
     if (c !=' '){
-      //b.leftCompensation = b.left<0 ? -b.left :0;
       b.leftCompensation = getLeftCompensation(c,b);
-      //b.rightCompensation =  b.right > pg.textWidth(c) ? b.right - pg.textWidth(c) : 0; 
       b.rightCompensation = geRightCompensation(c, b, pg);
     }
     hm.put(c,b);
@@ -68,7 +66,7 @@ class BoundingBoxMap{
   }
   float getLeftCompensation(char c, BoundingBox b){
     float res = 0.0;
-    FixedHorizontalCompensation fhc = fHCM.get(c);
+    FixedHorizontalCompensation fhc = g_fHCM.get(c);
     if (fhc == null || !fhc.compensateLeft){
       res = b.left<0 ? -b.left :0;
     }
@@ -80,7 +78,7 @@ class BoundingBoxMap{
 
   float geRightCompensation(char c, BoundingBox b, PGraphics pg){
     float res = 0.0;
-    FixedHorizontalCompensation fhc = fHCM.get(c);
+    FixedHorizontalCompensation fhc = g_fHCM.get(c);
     if (fhc == null || !fhc.compensateRight){
       res = b.right > pg.textWidth(c) ? b.right - pg.textWidth(c) : 0; 
     }
@@ -93,9 +91,9 @@ class BoundingBoxMap{
   int Top(PGraphics g){
     for (int ih=0;ih<g.height;ih++){
       for (int iw=0; iw<g.width;iw++){
-        color c = g.get(iw,ih);
-        if (c != white){
-          return ih-pixBordVec[upperIndex];
+        color col = g.get(iw,ih);
+        if (col != g_white){
+          return ih-pixBordVec[g_upperIndex];
         }
       }
     }
@@ -105,36 +103,36 @@ class BoundingBoxMap{
     int ret = 0;
     for (int ih=0;ih<g.height;ih++){
       for (int iw=0; iw<g.width;iw++){
-        color c = g.get(iw,ih);
-        if (c != white){
+        color col = g.get(iw,ih);
+        if (col != g_white){
           ret = max(ih,ret);
         }
       }
     }
-    return ret-pixBordVec[upperIndex];
+    return ret-pixBordVec[g_upperIndex];
   }
   int Left(PGraphics g,int ul, int ll){
     int ret = g.width;
     for (int ih=ul;ih<ll;ih++){
       for (int iw=0; iw<g.width;iw++){
-        color c = g.get(iw,ih);
-        if (c != white){
+        color col = g.get(iw,ih);
+        if (col != g_white){
           ret = min(iw,ret);
         }
       }
     }
-    return ret-pixBordVec[leftIndex];
+    return ret-pixBordVec[g_leftIndex];
   }
   int Right(PGraphics g,int ul, int ll){
     int ret = -1;
     for (int ih=ul;ih<ll;ih++){
       for (int iw=0; iw<g.width;iw++){
-        color c = g.get(iw,ih);
-        if (c != white){
+        color col = g.get(iw,ih);
+        if (col != g_white){
           ret = max(iw,ret);
         }
       }
     }
-    return ret-pixBordVec[leftIndex];
+    return ret-pixBordVec[g_leftIndex];
   }  
 }

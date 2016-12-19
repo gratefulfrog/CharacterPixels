@@ -27,11 +27,9 @@ class Justifier{
     
     for (int i=0; i<lineVec.length;i++){
       lineVec[i]+='\n';  // because reading from file does not add a \n to each line!
-      float delta =  lineWidthPixels -(useCompensatedWidth ? textWidth(lineVec[i],bm,f,fs) :textWidth(lineVec[i]));
-      //println("Uncompensated lenght\t", textWidth(lineVec[i]), "\tCompensated width\t", textWidth(lineVec[i],bm,f,fs));
+      float delta =  lineWidthPixels -(g_useCompensatedWidth ? textWidth(lineVec[i],bm,f,fs) :textWidth(lineVec[i]));
       String [] wordVec = split(lineVec[i],' ');
       spaceDeltaVec[i] = delta/(wordVec.length-1);  // -1 for the \n at the end!
-      //println(spaceDeltaVec[i]);
     }
     popStyle();
    } 
@@ -55,13 +53,13 @@ class DisplayText{
                          font, 
                          fontSize, 
                          bm, 
-                         lineWidth-(pixelBorderVec[leftIndex]+pixelBorderVec[rightIndex]), 
-                         screenH-(pixelBorderVec[upperIndex]+pixelBorderVec[lowerIndex]));
+                         lineWidth-(g_pixelBorderVec[g_leftIndex]+g_pixelBorderVec[g_rightIndex]), 
+                         screenH-(g_pixelBorderVec[g_upperIndex]+g_pixelBorderVec[g_lowerIndex]));
   }
   
   void display(){  
-    float x = pixelBorderVec[leftIndex],
-          y = pixelBorderVec[upperIndex];
+    float x = g_pixelBorderVec[g_leftIndex],
+          y = g_pixelBorderVec[g_upperIndex];
     textAlign(LEFT,TOP);
     textFont(font,fontSize);
     final float ch = textAscent()+textDescent(),
@@ -75,7 +73,7 @@ class DisplayText{
           char c = wordVec[wordIndex].charAt(charIndex);
           if (c != '\n'){
             float cw ;
-            if (useCompensatedWidth){
+            if (g_useCompensatedWidth){
               x+= bm.get(c).leftCompensation;
               cw = textWidth(c) + bm.get(c).rightCompensation;
             }
@@ -91,9 +89,8 @@ class DisplayText{
           }   
         }
         x += textWidth(' ')+ just.spaceDeltaVec[lineIndex];
-        //println("spacing\t:",textWidth(' ')+ just.spaceDeltaVec[lineIndex]);
       }
-      x=pixelBorderVec[leftIndex];
+      x=g_pixelBorderVec[g_leftIndex];
     }
   }
   
