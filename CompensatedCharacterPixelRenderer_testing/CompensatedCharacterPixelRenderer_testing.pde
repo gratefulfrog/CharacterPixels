@@ -1,3 +1,5 @@
+import processing.svg.*;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////               Text Lines Input File Name           /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,19 +13,27 @@
 final String screen1LinesFile = "screen1Text49lines.txt";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////       Font Family and Size and Border Dimensions   /////////////////////////////
+/////////////////////   Font Family & Size and Screen & Border Dimensions   ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The font name and size MUST correspond to a font in the data directory!
 // The fontFamily name should be something like  "Ingeborg-Regular", or "Times-Bold" without trailing 
 // dash's.
-final String fontFamily = "Ingeborg-New-f-Regular";
+// to ensure correct font generation, place the original font file in the data directory!
+final String fontFamily = "Ingeborg-New-f";
 
-// Changing the fntSize will change the image size, and the border width;
-// Currently available values are 22, 110, 220
+// point size of font
 final int fntSize  = 22;
 
-// This is the number of pixels at the smallest font, it will be scaled if bigger font is specified!
-final int border = 3;
+// This is the number of pixels to be used as a border on all sides of the text
+final int leftborder  = 3;
+final int rightborder = 3;
+final int upperborder = 2;
+final int lowerborder = 8;  // needs to be bigger for charcters with descent, eg. y, g, q, p ...
+
+
+// screen size in pixels
+final int screenWidth  = 1884;
+final int screenHeight = 1080;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////           Image Files Input File Base Name         /////////////////////////////
@@ -42,7 +52,11 @@ final String baseImageFileName = "Lightning";
 // These variables are usefull to render only some specific frames after a failure, or if some of the
 // underlying images were modified.
 final int startFrame     = 0;
-final int numberOfFrames = 300;
+final int numberOfFrames = 5; //300;
+
+// directory where the rendered frames are saved
+
+final String renderDirectory = "Render";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////// FONT HORIZONTAL SPACING COMPENSATION ////////////////////////////////
@@ -63,18 +77,24 @@ App app;
 PFont tFont;
 
 FixedHorizontalCompensationMap fHCM;
-String separator = "/";
 
-final int baseFontSize = 22;
-final int pixelBorder = border*fntSize/baseFontSize;
+final String separator = "/";
+final String renderDir = renderDirectory + separator;
+
+final String svgFileName = split(screen1LinesFile,".")[0] + ".svg";
+
+final int[] pixelBorderVec = {leftborder,rightborder,upperborder,lowerborder};
+final int leftIndex  = 0,
+          rightIndex = 1,
+          upperIndex = 2,
+          lowerIndex = 3;
+
 final int normalFPS = 30;
 
 boolean writeImages           = false,
-        specialOneFrameRender = false;
+        specialOneFrameRender = false,
+        writeSVG              = false;
 
-final int screenWidth = 1884*(fntSize/baseFontSize),
-          screenHeight = 1080*(fntSize/baseFontSize);
-    
 void settings(){
   size(screenWidth,screenHeight);
 }
@@ -83,7 +103,7 @@ void setup(){
   frameRate(normalFPS);
   pgA = createGraphics(screenWidth,screenHeight);
   String fName = fontFamily+ "-" +nf(fntSize) + ".vlw";
-  tFont = loadFont(fName);
+  tFont = createFont(fontFamily,22,true);
   println("Using font: " + fName);
   println("Using " + (useCompensatedWidth ? "Compensated" : "Standard") + " horizontal spacing!");
   fHCM = loadHorizontalCompensation();
@@ -94,14 +114,20 @@ void setup(){
 }
 
 void draw(){
+   if (app.doRecordSVG){
+      beginRecord(SVG, renderDir + svgFileName);
+      println("Rendering SVG file: " + 
+             svgFileName + 
+              "...");
+    }
    app.draw();
    if (writeImages && app.doSave()){
      int currentFrameID = app.outputImageCount-1 + startFrame,
-         endFrameID = startFrame+numberOfFrames-1;     
+         endFrameID = startFrame+numberOfFrames-1; 
      if (specialOneFrameRender){
-       currentFrameID = app.outputImageCount-1;
-       endFrameID  = app.nbImages-1;
-     }     
+        currentFrameID = app.outputImageCount-1;
+        endFrameID  = app.nbImages-1;
+     }         
      println("Rendering Frame: " + 
              app.baseName + 
              "_" + 
@@ -109,12 +135,22 @@ void draw(){
              " of " + 
              nf(endFrameID,5) + 
              " ...");
-     saveFrame("Render/" + 
+     saveFrame(renderDir + 
                app.baseName + 
                "Frame-" + 
                nf(currentFrameID,5) + 
                ".png");
    }
+     if(app.doRecordSVG){
+      endRecord();
+      app.doRecordSVG=false;
+      println("SVG Render Complete!");
+      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
+    }
+    if (app.stopRendering){
+      println("PNG Render Complete!");
+      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
+    }
 }
 
 void mousePressed(){
