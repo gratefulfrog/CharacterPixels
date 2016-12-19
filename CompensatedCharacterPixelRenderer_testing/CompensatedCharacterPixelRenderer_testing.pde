@@ -107,15 +107,8 @@ void settings(){
 
 void setup(){
   frameRate(g_normalFPS);
-  /*
-  final int nbChars = g_Chars.length();
-  char [] charSet = new char[nbChars];
-  for (int i=0;i<nbChars;i++){
-    charSet[i] = g_Chars.charAt(i);
-  }
-  */
   g_pgA = createGraphics(g_screenWidth,g_screenHeight);
-  String fName = g_fontFamily+ "-" +nf(g_fntSize);
+  String fName = g_fontFamily+ "-" + nf(g_fntSize);
   g_tFont = createFont(g_fontFamily,22,true);
   println("Using font: " + fName);
   println("Using " + (g_useCompensatedWidth ? "Compensated" : "Standard") + " horizontal spacing!");
