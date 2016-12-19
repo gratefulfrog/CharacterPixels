@@ -3,20 +3,20 @@ import processing.svg.*;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////               Text Lines Input File Name           /////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-// change the screen1LinesFile to any text file you want
+// change the screenLinesFile to any text file you want
 // each line should end with no extra spaces 
 // and the file should end at the end of the last line, with no extra lines
 // 
 // if the file name is given without a full path, then it must be in the data directory
 // if not it can be anywhere!
 
-final String screen1LinesFile = "screen1Text49lines.txt";
+final String screenLinesFile = "screen1Text49lines.txt";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////   Font Family & Size and Screen & Border Dimensions   ////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The font name and size MUST correspond to a font in the data directory!
-// The fontFamily name should be something like  "Ingeborg-Regular", or "Times-Bold" without trailing 
+// The fontFamily name should be something like  "Ingeborg-New-f", or "Times" without trailing 
 // dash's.
 // to ensure correct font generation, place the original font file in the data directory!
 final String fontFamily = "Ingeborg-New-f";
@@ -29,7 +29,6 @@ final int leftborder  = 3;
 final int rightborder = 3;
 final int upperborder = 2;
 final int lowerborder = 8;  // needs to be bigger for charcters with descent, eg. y, g, q, p ...
-
 
 // screen size in pixels
 final int screenWidth  = 1884;
@@ -62,7 +61,7 @@ final String renderDirectory = "Render";
 ////////////////////////////////// FONT HORIZONTAL SPACING COMPENSATION ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // setting this variable to true cause the program to try to compensate for font problems in 
-// horizontal spacing. Caution should be used since thi may increase line lenght and cause overlaps.
+// horizontal spacing. Caution should be used since thi may increase line length and cause overlaps.
 
 boolean useCompensatedWidth = true;
 
@@ -81,7 +80,7 @@ FixedHorizontalCompensationMap fHCM;
 final String separator = "/";
 final String renderDir = renderDirectory + separator;
 
-final String svgFileName = split(screen1LinesFile,".")[0] + ".svg";
+final String svgFileName = split(screenLinesFile,".")[0] + ".svg";
 
 final int[] pixelBorderVec = {leftborder,rightborder,upperborder,lowerborder};
 final int leftIndex  = 0,
@@ -110,7 +109,7 @@ void setup(){
   if (useCompensatedWidth && (fHCM.size() !=0)){
     println("Using manual compensation values from file: " + compensationFileName);
   }
-  app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
+  app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screenLinesFile,baseImageFileName);
 }
 
 void draw(){
@@ -145,11 +144,11 @@ void draw(){
       endRecord();
       app.doRecordSVG=false;
       println("SVG Render Complete!");
-      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
+      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screenLinesFile,baseImageFileName);
     }
     if (app.stopRendering){
       println("PNG Render Complete!");
-      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screen1LinesFile,baseImageFileName);
+      app = new ChooserApp(pgA,tFont,fntSize,screenWidth,screenHeight,screenLinesFile,baseImageFileName);
     }
 }
 
