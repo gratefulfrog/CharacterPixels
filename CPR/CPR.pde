@@ -41,7 +41,7 @@ final int g_screenHeight = 1080;
 // The following variables determine the source file names for the underlying image frames. 
 //
 // The source image frames must be placed in this directory which is in the data directory.
-final String g_InputImageDirectory  ="Input_Images";
+final String g_InputImageDirectory  = "Input_Images";
 
 // The variable contains the base image file name, and to that will be added _00000.png, _00001.png  etc.
 final String g_baseImageFileName = "Lightning";
