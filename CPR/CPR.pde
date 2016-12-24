@@ -10,7 +10,7 @@ import processing.svg.*;
 // if the file name is given without a full path, then it must be in the data directory
 // if not it can be anywhere!
 
-final String g_screenLinesFile = "screen1Text49lines.txt";
+final String g_screenLinesFile = "screenText49Shortlines.txt";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////   Font Family & Size and Screen & Border Dimensions   ////////////////////////////
@@ -65,8 +65,7 @@ final String g_renderDirectory = "Render";
 ////////////////////////////////// FONT HORIZONTAL SPACING COMPENSATION ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // setting this variable to true cause the program to try to compensate for font problems in 
-// horizontal spacing. Caution should be used since thi may increase line length and cause overlaps.
-
+// horizontal spacing. Caution should be used since this may increase line length and cause overlaps.
 boolean g_useCompensatedWidth = true;
 
 // This is the name of the csv file in the data directory that contains any manual horizontal compensation
