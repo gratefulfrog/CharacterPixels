@@ -2,13 +2,13 @@
 Processing code implementing the use of text characters as pixels
 
 # Usage
-- To do some **Super Serious rendering**, run `CompensatedCharacterPixelRender` after reading the instructions and setting up the parameters.
-- To visualize character spacing, run `NewBoxRenderer`.
+- To do some **Super Serious rendering**, run `CPR` after reading the instructions and setting up the parameters.
+- To visualize font and character spacing, run `NewBoxRenderer`.
 - Enjoy!
 
 # Notes
 - Memoisation is used to improve efficiency in character bounding box lookup! Check it out if you don't know what it is ;-)
-- `CompensatedCharacterPixelRender` uses a csv file to proivde the user with fine horizontal spacing adjustments of individual characters.
+- `CPR` and other recent executables use a csv file to proivde the user with fine horizontal spacing adjustments of individual characters.
 
 # Check out some Video Demos!
 
