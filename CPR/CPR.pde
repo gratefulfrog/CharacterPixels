@@ -64,7 +64,7 @@ final String g_renderDirectory = "Render";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////// FONT HORIZONTAL SPACING COMPENSATION ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-// setting this variable to true cause the program to try to compensate for font problems in 
+// setting this variable to true causes the program to try to compensate for font problems in 
 // horizontal spacing. Caution should be used since this may increase line length and cause overlaps.
 boolean g_useCompensatedWidth = true;
 
