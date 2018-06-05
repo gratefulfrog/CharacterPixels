@@ -1,4 +1,7 @@
 # CharacterPixels
+
+Following Microsoft's purchase of Github, this project has migrated to gitlab.
+
 Processing code implementing the use of text characters as pixels
 
 # Usage
